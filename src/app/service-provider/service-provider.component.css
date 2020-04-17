@@ -1,0 +1,53 @@
+.container-fluid {
+    margin-top: 1%;
+}
+.text {
+    font-size:2vw;
+    font-family: 'Archivo Black', sans-serif;
+    color: orange;
+}
+img, .text {
+    display: inline;
+}
+nav{
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+.textProfile{
+    font-size: 16px;
+    color: orange;
+    font-weight: bolder;
+  }
+  .img {
+    opacity: 1;
+    display: block;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+  }
+  .middle {
+    position: fixed;
+    margin-top: 25px;
+    margin-left: 25px;
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+   
+  }
+  .profile:hover .img {
+    opacity: 0;
+  }
+  img:hover{
+      opacity: 0.2;
+  }
+  
+  .profile:hover    .middle {
+    opacity: 1;
+    
+  }
