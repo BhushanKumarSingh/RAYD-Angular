@@ -24,6 +24,11 @@ import { ServiceProviderServiceComponent } from './service-provider/main-content
 import { ServiceProviderDashboardComponent } from './service-provider/main-content/service-provider-dashboard/service-provider-dashboard.component';
 import { ServiceProviderTechnicianComponent } from './service-provider/main-content/service-provider-technician/service-provider-technician.component';
 import { ServiceProviderQueryComponent } from './service-provider/main-content/service-provider-query/service-provider-query.component';
+import { AdminPannelComponent } from './admin-pannel/admin-pannel.component';
+import { AdminSideBarComponent } from './admin-pannel/admin-side-bar/admin-side-bar.component';
+import { AdminContentComponent } from './admin-pannel/admin-content/admin-content.component';
+import { ServiceProviderRequestComponent } from './admin-pannel/admin-content/service-provider-request/service-provider-request.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +49,12 @@ import { ServiceProviderQueryComponent } from './service-provider/main-content/s
     ServiceProviderServiceComponent,
     ServiceProviderDashboardComponent,
     ServiceProviderTechnicianComponent,
-    ServiceProviderQueryComponent
+    ServiceProviderQueryComponent,
+    AdminPannelComponent,
+    AdminSideBarComponent,
+    AdminContentComponent,
+    ServiceProviderRequestComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

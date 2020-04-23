@@ -13,7 +13,9 @@ import { OrderDetails } from './order-details';
 })
 export class RaydService {
 
-  constructor(private http: HttpClient,private router:Router) { }
+  constructor(private http: HttpClient,private router:Router) { 
+    console.log(router.url) 
+  }
   flagForCustomer = false;
   flagForServiceProvider = true;
 
@@ -44,7 +46,7 @@ export class RaydService {
   loginDetails = new LoginDetails();
   userData;
 
-  login() {
+  customerLogin() {
     var URL = this.url+'signIn'
 
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.loginDetails.getEmailId + ':' + this.loginDetails.getPassword) });
@@ -59,7 +61,24 @@ export class RaydService {
         alert("Something wrong with password or username")
       }
     )
-   
+  }
+  adminLogin(){
+    var URL = this.url+'adminLogin'
+
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.loginDetails.getEmailId + ':' + this.loginDetails.getPassword) });
+    this.http.post(URL, this.loginDetails, { headers, responseType: 'text'}).subscribe(
+      (result) => { 
+        alert("login")
+        
+        this.router.navigate(['admin']);
+      },
+      err => {
+        alert("Something wrong with password or username")
+      }
+    )
+
+  }
+  serviceProviderLogin(){
 
   }
   serviceProvider=new ServiceProvider();
@@ -173,6 +192,32 @@ export class RaydService {
   
         }
       )
+  }
+  verifyServiceRequestDetails;
+  async verifyServiceRequest(){
+    var URL = this.url+'varify';
+    this.verifyServiceRequestDetails=await this.http.get(URL).toPromise();
+
+  }
+ async sendLoginPassword(serviceProvider){
+    var URL = this.url+'sendPassword'
+      this.http.post(URL, serviceProvider, { responseType: 'text' as 'json' }).subscribe(
+        (result) => {
+          console.log(result)
+          alert("password send")
+        },
+        err => {
+          alert("something wrong")
+  
+        }
+      )
+
+  }
+  vistingMessage;
+  async getVistingDetails(){
+    var URL = this.url+'review?userId='+this.userData.userId;
+    this.vistingMessage=await this.http.get(URL).toPromise();
+    console.log(this.vistingMessage)
   }
 
 

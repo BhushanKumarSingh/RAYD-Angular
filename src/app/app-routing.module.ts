@@ -13,10 +13,13 @@ import { ServiceProviderTechnicianComponent } from './service-provider/main-cont
 import { IncomingRequestComponent } from './service-provider/main-content/incoming-request/incoming-request.component';
 import { CustomerFeedbackComponent } from './service-provider/main-content/customer-feedback/customer-feedback.component';
 import { ServiceProviderQueryComponent } from './service-provider/main-content/service-provider-query/service-provider-query.component';
+import { AdminPannelComponent } from './admin-pannel/admin-pannel.component';
+import { ServiceProviderRequestComponent } from './admin-pannel/admin-content/service-provider-request/service-provider-request.component';
+import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
-  {path: "loginpage", component: LoginpageComponent},
+  {path: "customerLogin", component: LoginpageComponent},
   {path: "customersignup", component: UserSignupComponent},
   {path: "addresspage", component: AddressComponent},
   {path: "serviceProviderSignUp",component:ServiceProvideSignupComponent},
@@ -30,8 +33,16 @@ const routes: Routes = [
     {path:"requests", component:IncomingRequestComponent},
     {path:"feedback",component:CustomerFeedbackComponent},
     {path:"myquery",component:ServiceProviderQueryComponent},
+  ]},
+  {path:"admin",component:AdminPannelComponent,
+  children:[
+    {path:"serviceProviderRequest",component:ServiceProviderRequestComponent}
   ]
-}
+},
+{path:"home",component:HomeComponent},
+{path:"",component:HomeComponent},
+{path:"adminLogin",component:LoginpageComponent},
+{path:"ServiceProviderLogin",component:LoginpageComponent}
 ];
 
 @NgModule({

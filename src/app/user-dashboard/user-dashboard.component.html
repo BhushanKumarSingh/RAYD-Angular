@@ -8,8 +8,8 @@
              <i class="fas fa-plus-square plus"></i>
              <a type="button" class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" (click)="fetchAddress()">Add problem <span class="sr-only">(current)</span></a>
             
-             <i class="fas fa-bell-slash cart"></i><sup>{{notification}}</sup>
-             <a class="nav-link" data-toggle="modal" data-target="#exampleModalLong">Notification <span class="sr-only">(current)</span></a>
+             <i class="fas fa-bell-slash cart" ></i><sup>{{notification}}</sup>
+             <a class="nav-link" data-toggle="modal" data-target="#exampleModalLong" (click)="notifiaction()">Notification <span class="sr-only">(current)</span></a>
             <i class="fas fa-luggage-cart cart"></i>
             <a class="nav-link" data-toggle="modal" data-target="#portfolio" (click)="portfolioDetails()">Portfolio <span class="sr-only">(current)</span></a>
             <div class="profile" data-toggle="modal" data-target="#sideModalTR" (click)="getUser()">
@@ -320,7 +320,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Log Out</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" routerLink="/">Log Out</button>
       </div>
     </div>
   </div>
@@ -336,7 +336,30 @@
         <h5 class="modal-title" id="exampleModalLongTitle">Notification</h5>
       </div>
       <div class="modal-body">
-        ...
+        <div class="row">
+          <div *ngFor="let data of visitingMessage ;let i=index" style="width:100%;">
+            
+         
+           
+            <div class="card-header addressType">
+              {{data[5]}}
+            </div>
+            <div class="card-body" style="width: 100%;">
+              <h5 class="card-title">{{data[1]}} {{data[2]}} {{data[4]}}</h5>
+              <p class="card-text">{{data[3]}}</p>
+              <h6 style="color: rgb(13, 128, 2);">Visting Message</h6>
+              <p>{{data[7]}}</p>
+              <p *ngIf="open(data[6])" class="status1">Open</p>
+              <p *ngIf="accepted(data[6])" class="status2">Accepeted</p>
+              <p *ngIf="completed(data[6])" class="status3">Completed</p>
+              <p *ngIf="visited(data[6])" class="status4">Visited</p>
+            </div>
+          
+
+
+        </div>
+
+        </div>
       </div>
       <div class="modal-footer">
        <a style="text-align: center;" router>See All</a>
@@ -366,10 +389,10 @@
               <div class="card-body" style="width: 100%;">
                 <h5 class="card-title">{{data.productName}} {{data.companyName}} {{data.modelNumber}}</h5>
                 <p class="card-text">{{data.description}}</p>
-                <p *ngIf="open(data.status)" style="float: right;">Waiting for Acceptence the request</p>
-                <p *ngIf="accepted(data.status)">Accepeted</p>
-                <p *ngIf="rejected(data.status)">Rejected</p>
-                <p *ngIf="visited(data.status)">Visited</p>
+                <p *ngIf="open(data.status)" class="status1">Open</p>
+                <p *ngIf="accepted(data.status)" class="status2">Accepeted</p>
+                <p *ngIf="completed(data.status)" class="status3">Completed</p>
+                <p *ngIf="visited(data.status)" class="status4">Visited</p>
                 <a class="btn btn-success" (click)="addressValue(address)" data-dismiss="modal">PickUp Here</a>
               </div>
             

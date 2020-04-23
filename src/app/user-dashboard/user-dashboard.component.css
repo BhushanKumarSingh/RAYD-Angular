@@ -130,3 +130,23 @@ nav{
   .portfolioContent{
     height:430px;
   }
+  .status1{
+    float: right;
+    color: rgb(0, 0, 0);
+    font-weight: bolder;
+  }
+  .status2{
+    float: right;
+    color: green;
+    font-weight: bolder;
+  }
+  .status3{
+    float: right;
+    color: blue;
+    font-weight: bolder;
+  }
+  .status4{
+    float: right;
+    color: chocolate;
+    font-weight: bolder;
+  }

@@ -85,12 +85,14 @@ open(status){
   return false;
 }
 accepted(status){
-  if(status=='ACCEPTED')
+ 
+  if(status=='ACCEPTED'){
   return true;
+}
 
 }
-rejected(status){
-  if(status=='REJECTED')
+completed(status){
+  if(status=='COMPLETED')
   return true;
 }
 visited(status){
@@ -102,6 +104,12 @@ checkPortfolio(){
 //   return false;
 //   else
 //   return true;
+ }
+ visitingMessage;
+ async notifiaction(){
+   await this.raydService.getVistingDetails();
+   this.visitingMessage=this.raydService.vistingMessage;
+
  }
 
 

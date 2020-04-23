@@ -7,6 +7,15 @@ export class ServiceProvider {
     completeAddress: string;
     pinCode: string;
     addressType: string;
+    serviceProviderId:string;
+    public get getServiceProviderId() {
+        return this.serviceProviderId;
+    }
+
+	public set setServiceProviderId(serviceProviderId) {
+    this.serviceProviderId = serviceProviderId;
+}
+
 
     public get getServiceProviderName() {
         return this.serviceProviderName;

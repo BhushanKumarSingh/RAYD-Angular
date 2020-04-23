@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component ,OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,11 +6,15 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent{
   title = 'repair-at-your-doorstep';
-  constructor(private router:Router){}
+  constructor(private router:Router){
+  }
   flag=true;
-  change(){
-    this.flag=false
+  change(url){
+    if(url=="/")
+    this.flag=true;
+    else
+    this.flag=false;
   }
 }
