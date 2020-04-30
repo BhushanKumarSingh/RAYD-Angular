@@ -26,7 +26,7 @@ export class AddressComponent implements OnInit {
   }
   saveData(){
     if(this.raydService.flagForCustomer==true){
-      var address=this.addressForm.get('landmark').value+", "+this.addressForm.get('city').value+", "+this.addressForm.get('state').value;
+      var address=this.addressForm.get('address').value+","+this.addressForm.get('landmark').value+", "+this.addressForm.get('city').value+", "+this.addressForm.get('state').value;
       this.raydService.signUpDetails.setCompleteAddress=address;
       this.raydService.signUpDetails.setAddressType=this.addressForm.get('addressType').value;
       this.raydService.signUpDetails.setCurrentLocation=this.addressForm.get('locality').value;
@@ -34,7 +34,7 @@ export class AddressComponent implements OnInit {
       this.raydService.signUp();
     }
     else{
-      var address=this.addressForm.get('landmark').value+", "+this.addressForm.get('city').value+", "+this.addressForm.get('state').value;
+      var address=this.addressForm.get('address').value+","+this.addressForm.get('landmark').value+", "+this.addressForm.get('city').value+", "+this.addressForm.get('state').value;
       this.raydService.serviceProvider.setCompleteAddress=address;
       this.raydService.serviceProvider.setAddressType=this.addressForm.get('addressType').value;
       this.raydService.serviceProvider.setCurrentLocation=this.addressForm.get('locality').value;

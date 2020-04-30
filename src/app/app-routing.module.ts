@@ -3,19 +3,24 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginpageComponent } from './loginpage/loginpage.component';
 import { UserSignupComponent } from './customer-signup/user-signup.component';
 import { AddressComponent } from './address/address.component';
-import { ServiceProvideSignupComponent } from "./service-provide-signup/service-provide-signup.component";
-import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
-import { AddProblemComponent } from './add-problem/add-problem.component';
-import { ServiceProviderComponent } from './service-provider/service-provider.component';
-import { ServiceProviderDashboardComponent } from './service-provider/main-content/service-provider-dashboard/service-provider-dashboard.component';
-import { ServiceProviderServiceComponent } from './service-provider/main-content/service-provider-service/service-provider-service.component';
-import { ServiceProviderTechnicianComponent } from './service-provider/main-content/service-provider-technician/service-provider-technician.component';
-import { IncomingRequestComponent } from './service-provider/main-content/incoming-request/incoming-request.component';
-import { CustomerFeedbackComponent } from './service-provider/main-content/customer-feedback/customer-feedback.component';
-import { ServiceProviderQueryComponent } from './service-provider/main-content/service-provider-query/service-provider-query.component';
+import { ServiceproviderComponent } from './serviceprovider/serviceprovider.component'
+import { SpDashboardComponent } from './serviceprovider/main-content/sp-dashboard/sp-dashboard.component';
+import { SpTechniciansComponent } from './serviceprovider/main-content/technician/sp-technicians/sp-technicians.component';
+import { IncomingRequestComponent } from './serviceprovider/main-content/incoming-request/incoming-request.component';
+import { CustomerFeedbackComponent } from './serviceprovider/main-content/customer-feedback/customer-feedback.component';
+import { SpQueryComponent } from './serviceprovider/main-content/sp-query/sp-query.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { SpAddTechnicianComponent } from './serviceprovider/main-content/technician/sp-add-technician/sp-add-technician.component';
+import { TechnicianComponent } from './serviceprovider/main-content/technician/technician.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { CustomerInvoiceComponent } from './customer/customer-invoice/customer-invoice.component';
+import { PaymentStripeComponent } from './customer/payment-stripe/payment-stripe.component';
 import { AdminPannelComponent } from './admin-pannel/admin-pannel.component';
 import { ServiceProviderRequestComponent } from './admin-pannel/admin-content/service-provider-request/service-provider-request.component';
-import { HomeComponent } from './home/home.component';
+import { ServiceProviderServiceComponent } from './serviceprovider/main-content/service-provider-service/service-provider-service.component';
+import { ServiceProvideSignupComponent } from './service-provide-signup/service-provide-signup.component';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { AddProblemComponent } from './add-problem/add-problem.component';
 
 
 const routes: Routes = [
@@ -25,24 +30,34 @@ const routes: Routes = [
   {path: "serviceProviderSignUp",component:ServiceProvideSignupComponent},
   {path:"userDashboard",component:UserDashboardComponent},
   {path:"addProblem",component:AddProblemComponent},
-  {path:"serviceProvider",component:ServiceProviderComponent,
-  children:[
-    {path:"dashboard",component:ServiceProviderDashboardComponent},
-    {path:"services",component:ServiceProviderServiceComponent},
-    {path:"technicians",component:ServiceProviderTechnicianComponent},
-    {path:"requests", component:IncomingRequestComponent},
-    {path:"feedback",component:CustomerFeedbackComponent},
-    {path:"myquery",component:ServiceProviderQueryComponent},
-  ]},
+  {path:"adminLogin",component:LoginpageComponent},
+  {path:"ServiceProviderLogin",component:LoginpageComponent},
+  {path:"home",component:HomepageComponent},
+  {path : "", component : HomepageComponent},
+  {path : "changepassword", component : ChangePasswordComponent},
+  {path : "repairinvoice", component : CustomerInvoiceComponent},
+  {path : "paystripe",  component : PaymentStripeComponent},
+  
   {path:"admin",component:AdminPannelComponent,
-  children:[
-    {path:"serviceProviderRequest",component:ServiceProviderRequestComponent}
-  ]
-},
-{path:"home",component:HomeComponent},
-{path:"",component:HomeComponent},
-{path:"adminLogin",component:LoginpageComponent},
-{path:"ServiceProviderLogin",component:LoginpageComponent}
+    children:[
+      {path:"serviceProviderRequest",component:ServiceProviderRequestComponent}
+    ]
+  },
+  {path : 'serviceProvider', component : ServiceproviderComponent,
+    children : [
+      {path : 'dashboard', component : SpDashboardComponent},
+      {path : 'services', component : ServiceProviderServiceComponent},
+      {path : 'technician', component : TechnicianComponent,
+          children : [
+            {path : '', component : SpTechniciansComponent},
+            {path : 'addtechnician', component : SpAddTechnicianComponent}
+          ]
+      },
+      {path : 'requests', component : IncomingRequestComponent},
+      {path : 'feedback', component : CustomerFeedbackComponent},
+      {path : 'myquery', component : SpQueryComponent}
+    ]
+  },
 ];
 
 @NgModule({

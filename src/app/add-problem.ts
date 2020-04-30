@@ -5,6 +5,10 @@ export class AddProblem {
     modelNumber: string;
     description: string;
     userId: number;
+    localDate: Date;
+
+   
+
 
     currentLocation:string;
     pinCode:number;
@@ -111,5 +115,12 @@ export class AddProblem {
         public set setAddressId( addressId) {
         this.addressId = addressId;
     }
+    public get getDate() {
+        return this.localDate;
+    }
+
+	public set setDate( localDate) {
+    this.localDate = localDate;
+}
 
 }

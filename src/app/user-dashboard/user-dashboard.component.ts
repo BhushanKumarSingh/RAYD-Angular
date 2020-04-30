@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppComponent } from "../app.component";
 import { FormGroup, FormControl } from '@angular/forms';
 import { RaydService } from '../rayd.service';
+import { Chart } from "chart.js";
 
 @Component({
   selector: 'app-user-dashboard',
@@ -34,9 +35,78 @@ export class UserDashboardComponent implements OnInit {
   userName;
   emailId;
   portfolioData;
-  ngOnInit() {
+  PieChart=[];
+  BarChart=[];
+  paymentData;
+ async ngOnInit() {
     this.notification=1;
     this.raydService.getRequest();
+    await this.raydService.getNotCompletedPayment();
+    this.paymentData=this.raydService.paymentData;
+
+    await this.raydService.getrequestTypeOfUser();
+    console.log(this.raydService.requestTypeOfAUser)
+    this.PieChart=new Chart("pieChart",{
+      type:'pie',
+      data:{
+        labels:["Electronics","Furniture","Plumber","Mechanic"],
+        datasets:[{
+          label:'Pie Chart',
+          data:this.raydService.requestTypeOfAUser[0],
+          backgroundColor:[
+            'ORANGE',
+            'BLUE',
+            'GREEN',
+            'PINK'
+          ],
+        }]
+      },
+      options:{
+        title:{
+          text:"Pie Chart",
+          display:true
+        },
+        scales:{
+          yAxes:[{
+            ticks:{
+             beginAtZero:true
+            }
+          }]
+        }
+      }
+
+    })
+
+    this.BarChart=new Chart("barChart",{
+      type:'bar',
+      data:{
+        labels:["Electronics","Furniture","Plumber","Mechanic"],
+        datasets:[{
+          label:'Bar Chart',
+          data:this.raydService.requestTypeOfAUser[0],
+          backgroundColor:[
+            'ORANGE',
+            'BLUE',
+            'GREEN',
+            'PINK'
+          ],
+        }]
+      },
+      options:{
+        title:{
+          text:"Bar Chart",
+          display:true
+        },
+        scales:{
+          yAxes:[{
+            ticks:{
+             beginAtZero:true
+            }
+          }]
+        }
+      }
+
+    })
   }
   fetchAddress(){
     this.raydService.getAddress();
@@ -62,7 +132,7 @@ addressValue(event:any){
   this.raydService.getRequest();
 }
 addNewAddress(){
-  var address=this.addressForm.get('landmark').value+", "+this.addressForm.get('city').value+", "+this.addressForm.get('state').value;
+  var address=this.addressForm.get('address').value+","+this.addressForm.get('landmark').value+", "+this.addressForm.get('city').value+", "+this.addressForm.get('state').value;
   this.raydService.addProblem.setCompleteAddress=address;
   this.raydService.addProblem.setCurrentLocation=this.addressForm.get('locality').value;
   this.raydService.addProblem.setPinCode=this.addressForm.get('pinCode').value;
@@ -111,6 +181,7 @@ checkPortfolio(){
    this.visitingMessage=this.raydService.vistingMessage;
 
  }
+ 
 
 
 

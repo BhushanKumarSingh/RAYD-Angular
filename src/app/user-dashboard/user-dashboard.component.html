@@ -1,17 +1,17 @@
 
-    <nav class="navbar navbar-light bg-light justify-content-between">
+    <nav class="navbar navbar-light bg-light justify-content-between" style="margin-bottom: 20px;">
         <a class="navbar-brand" href="#">
             <img src="../../assets/img/logo.png" width="55" height="40" class="d-inline-block align-top" alt="">
             <h2 class="text">Repair At Your Doorstep</h2>
         </a>
         <form class="form-inline">
              <i class="fas fa-plus-square plus"></i>
-             <a type="button" class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" (click)="fetchAddress()">Add problem <span class="sr-only">(current)</span></a>
+             <a type="button" class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" (click)="fetchAddress()">Add problem</a>
             
              <i class="fas fa-bell-slash cart" ></i><sup>{{notification}}</sup>
-             <a class="nav-link" data-toggle="modal" data-target="#exampleModalLong" (click)="notifiaction()">Notification <span class="sr-only">(current)</span></a>
+             <a class="nav-link" data-toggle="modal" data-target="#exampleModalLong" (click)="notifiaction()">Notification </a>
             <i class="fas fa-luggage-cart cart"></i>
-            <a class="nav-link" data-toggle="modal" data-target="#portfolio" (click)="portfolioDetails()">Portfolio <span class="sr-only">(current)</span></a>
+            <a class="nav-link" data-toggle="modal" data-target="#portfolio" (click)="portfolioDetails()">Portfolio</a>
             <div class="profile" data-toggle="modal" data-target="#sideModalTR" (click)="getUser()">
                 <div class="middle" >
                     <div class="textProfile">Profile</div>
@@ -21,10 +21,64 @@
             </div>
         </form>
     </nav>
+    
+<div class="container"  style="margin-top: 20px;width: 70%;">
+  <div *ngFor="let data of paymentData">
+    <div class="card" style="box-shadow: 2px 2px 20px 1px;margin: 20px;">
+      <div class="card-header row">
+        <div class="col-md-10">
+          <h5>Completed Request</h5>
+          </div>
+          <div class="col-md-2">
+            <div class="row">
+              <h6 style="float: right;">Date</h6>
+            </div>
+            <div class="row">
+              {{data.localDate}}
+            </div>
+          </div>
+      </div>
+      <div class="card-body row" style="margin-top: 0px">
+        <div class="col-md-10">
+        <h5 class="card-title">{{data.productName}} {{data.companyName}} {{data.modelNumber}}</h5>
+       
+        <p class="card-text">{{data.description}}</p>
+        </div>
+        <div class="col-md-2">
+          <div class="row">
+            <h5 style="float: right;">Status</h5>
+          </div>
+          <div class="row">
+            <p style="float: right;color: green;font-weight: bolder;">Completed</p>
+          </div>
+          <div class="row">
+            <a routerLink="/paystripe" class="btn btn-primary" style="float: right;">Pay Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+  </div>
 
+</div>
 
 <div class="container">
-    <div class="row">
+  <div>
+    <div class="modal-header">
+        <h3 style=" color: blue;margin: auto; padding: 20px;">Your requested problem </h3 >
+      </div>
+      <div class="row">
+      <div class="col-md-6">
+    <canvas id="pieChart"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="barChart"></canvas>
+
+    </div>
+    </div>
+</div>
+<div >
+    <div class="row" style=" margin-top: 30px;">
         <div class="col-md">
             <div class="card card-image"
             style="background-image: url(../../assets/img/electronics.png);">
@@ -62,7 +116,7 @@
 
         </div>
     </div>  
-    <div class="row">
+    <div class="row" style=" margin-top: 30px;">
         <div class="col-md">
             <div class="card card-image"
             style="background-image: url(../../assets/img/mechanic.png);">
@@ -99,7 +153,35 @@
         </div> 
 
         </div>
-    </div>    
+    </div>  
+    </div>  
+    <!-- <div *ngFor="let data of portfolioData ;let i=index" style="width:95%;">
+            
+      <div class="card-header row">
+        <div class="col-md-10 addressType">
+          {{data.productType}}
+          </div>
+          <div class="col-md-2">
+            <div class="row">
+              <h6 style="float: right;">Date</h6>
+            </div>
+            <div class="row">
+              {{data.localDate}}
+            </div>
+          </div>
+      </div>
+        <div class="card-body" style="width: 100%;">
+          <h5 class="card-title">{{data.productName}} {{data.companyName}} {{data.modelNumber}}</h5>
+          <p class="card-text">{{data.description}}</p>
+          <p *ngIf="open(data.status)" class="status1">Open</p>
+          <p *ngIf="accepted(data.status)" class="status2">Accepeted</p>
+          <p *ngIf="completed(data.status)" class="status3">Completed</p>
+          <p *ngIf="visited(data.status)" class="status4">Visited</p>
+        </div>
+      
+
+
+    </div> -->
 </div>
 
 <div class="modal fade bd-example-modal-lg modal-dialog-scrollable " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -196,8 +278,10 @@
               </div>
               <div class="card-body" style="width: 100%;">
                 <h5 class="card-title"></h5>
-                <p class="card-text">{{address.currentLocation}} {{address.completeAddress}} {{address.pinCode}}</p>
-                <a class="btn btn-success" (click)="addressValue(address)" data-dismiss="modal">PickUp Here</a>
+                <p class="card-text">{{address.currentLocation}}</p>
+                <p>{{address.completeAddress?.split(',')[1]}} {{address.completeAddress?.split(',')[0]}}</p>
+                <p style="font-weight: bolder;">{{address.completeAddress?.split(',')[2]}} , {{address.completeAddress?.split(',')[3]}} {{address.pinCode}}</p> 
+                <a class="btn btn-success" (click)="addressValue(address)" data-dismiss="modal">Select</a>
               </div>
             </div>
 
@@ -258,8 +342,11 @@
             <div class="form-group col-md-4">
             <label for="inputState" id="inputField"><b>State<sup>*</sup></b></label>
             <select id="inputState" class="form-control" formControlName="state">
-            <option selected>Choose...</option>
-            <option>...</option>
+              <option selected>Odisha</option>
+              <option selected>Jharkhand</option>
+              <option selected>Bihar</option>
+              <option selected>Chhattisgarh</option>
+              <option selected>Madhya Pradesh</option>
             </select>
             </div>
             <div class="form-group col-md-2">
@@ -339,11 +426,21 @@
         <div class="row">
           <div *ngFor="let data of visitingMessage ;let i=index" style="width:100%;">
             
-         
-           
-            <div class="card-header addressType">
-              {{data[5]}}
+            <div class="card-header row">
+              <div class="col-md-10 addressType">
+                {{data[5]}}
+                </div>
+                <div class="col-md-2">
+                  <div class="row">
+                    <h6 style="float: right;">Date</h6>
+                  </div>
+                  <div class="row">
+                    {{data[8]}}
+                  </div>
+                </div>
             </div>
+           
+            
             <div class="card-body" style="width: 100%;">
               <h5 class="card-title">{{data[1]}} {{data[2]}} {{data[4]}}</h5>
               <p class="card-text">{{data[3]}}</p>
@@ -379,13 +476,21 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          <div *ngFor="let data of portfolioData ;let i=index" style="width:100%;">
+          <div *ngFor="let data of portfolioData ;let i=index" style="width:95%;">
             
-         
-           
-              <div class="card-header addressType">
+            <div class="card-header row">
+              <div class="col-md-10 addressType">
                 {{data.productType}}
-              </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="row">
+                    <h6 style="float: right;">Date</h6>
+                  </div>
+                  <div class="row">
+                    {{data.localDate}}
+                  </div>
+                </div>
+            </div>
               <div class="card-body" style="width: 100%;">
                 <h5 class="card-title">{{data.productName}} {{data.companyName}} {{data.modelNumber}}</h5>
                 <p class="card-text">{{data.description}}</p>
@@ -393,7 +498,6 @@
                 <p *ngIf="accepted(data.status)" class="status2">Accepeted</p>
                 <p *ngIf="completed(data.status)" class="status3">Completed</p>
                 <p *ngIf="visited(data.status)" class="status4">Visited</p>
-                <a class="btn btn-success" (click)="addressValue(address)" data-dismiss="modal">PickUp Here</a>
               </div>
             
 

@@ -54,8 +54,8 @@ export class RaydService {
       (result) => {
         this.userData = JSON.parse(result); 
         alert("login")
-        
         this.router.navigate(['userDashboard']);
+        
       },
       err => {
         alert("Something wrong with password or username")
@@ -78,7 +78,23 @@ export class RaydService {
     )
 
   }
+  serviceData;
   serviceProviderLogin(){
+    var URL = this.url+'serviceProviderLogin'
+
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.loginDetails.getEmailId + ':' + this.loginDetails.getPassword) });
+    this.http.post(URL, this.loginDetails, { headers, responseType: 'text' }).subscribe(
+      (result) => {
+        this.serviceData = JSON.parse(result); 
+        alert("login")
+        this.router.navigate(['serviceProvider']);
+        
+      },
+      err => {
+        alert("Something wrong with password or username")
+      }
+    )
+    
 
   }
   serviceProvider=new ServiceProvider();
@@ -133,6 +149,7 @@ export class RaydService {
     var URL = this.url+'getProblem?userId='+this.userData.userId;
     
     this.problemRequested=await this.http.get(URL).toPromise();
+    console.log(this.problemRequested)
   }
   openRequest;
   async getOpenRequest(){
@@ -156,7 +173,7 @@ export class RaydService {
   }
   servicesProblem;
   async getAcctedService(){
-    var URL = this.url+'getServices?serviceProviderId=29';
+    var URL = this.url+'getServices?serviceProviderId='+this.serviceData.serviceProviderId;
     this.servicesProblem= await this.http.get(URL).toPromise();
     console.log(this.servicesProblem);
   }
@@ -180,7 +197,6 @@ export class RaydService {
    orderDetails=new OrderDetails();
    async saveOrderDetails(){
     var URL = this.url+'orderDetails'
-
     //  const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.serviceProvider.getEmailId + ':' + this.serviceProvider.getPassword) });
       this.http.post(URL, this.orderDetails, { responseType: 'text' as 'json' }).subscribe(
         (result) => {
@@ -219,6 +235,23 @@ export class RaydService {
     this.vistingMessage=await this.http.get(URL).toPromise();
     console.log(this.vistingMessage)
   }
+  requestType;
+  async getrequestType(){
+    var URL=this.url+'countType';
+    this.requestType=await this.http.get(URL).toPromise();
+    console.log(this.requestType[0]);
+  }
+  requestTypeOfAUser;
+  async getrequestTypeOfUser(){
+    var URL=this.url+'countTypeOfAUser?userId='+this.userData.userId;
+    this.requestTypeOfAUser=await this.http.get(URL).toPromise();
+  }
+  paymentData;
+  async getNotCompletedPayment(){
+    var URL=this.url+'getPaymentStatus?userId='+this.userData.userId;
+    this.paymentData=await this.http.get(URL).toPromise();
+  }
+
 
 
 
