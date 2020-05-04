@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup,FormControl } from "@angular/forms";
+import { FormGroup,FormControl, Validators } from "@angular/forms";
 import { RaydService } from "../rayd.service";
 
 @Component({
@@ -9,13 +9,13 @@ import { RaydService } from "../rayd.service";
 })
 export class UserSignupComponent implements OnInit {
   signUpForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
-    phoneNumber: new FormControl(''),
-    rePassword: new FormControl(''),
-    role: new FormControl('')
+    firstName: new FormControl('',[Validators.required]),
+    lastName: new FormControl('',Validators.required),
+    email: new FormControl('',Validators.required),
+    password: new FormControl('',Validators.required),
+    phoneNumber: new FormControl('',Validators.required),
+    rePassword: new FormControl('',Validators.required),
+    role: new FormControl('',Validators.required)
   })
 
   constructor(private raydService:RaydService) {
@@ -25,7 +25,6 @@ export class UserSignupComponent implements OnInit {
   ngOnInit() {
   }
 
- 
   getBgImage()
   {
     return "url('../../assets/img/background.svg')";

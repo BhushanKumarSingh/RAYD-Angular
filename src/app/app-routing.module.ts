@@ -21,6 +21,9 @@ import { ServiceProviderServiceComponent } from './serviceprovider/main-content/
 import { ServiceProvideSignupComponent } from './service-provide-signup/service-provide-signup.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { AddProblemComponent } from './add-problem/add-problem.component';
+import { AllServiceProviderComponent } from './admin-pannel/admin-content/all-service-provider/all-service-provider.component';
+import { AllCustomerComponent } from './admin-pannel/admin-content/all-customer/all-customer.component';
+import { AllServiceRequestComponent } from './admin-pannel/admin-content/all-service-request/all-service-request.component';
 
 
 const routes: Routes = [
@@ -40,7 +43,10 @@ const routes: Routes = [
   
   {path:"admin",component:AdminPannelComponent,
     children:[
-      {path:"serviceProviderRequest",component:ServiceProviderRequestComponent}
+      {path:"serviceProviderRequest",component:ServiceProviderRequestComponent},
+      {path:"allServiceProvider",component:AllServiceProviderComponent},
+      {path:"allCustomer",component:AllCustomerComponent},
+      {path:"allServiceRequest",component:AllServiceRequestComponent}
     ]
   },
   {path : 'serviceProvider', component : ServiceproviderComponent,

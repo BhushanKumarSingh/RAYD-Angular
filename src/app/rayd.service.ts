@@ -251,6 +251,41 @@ export class RaydService {
     var URL=this.url+'getPaymentStatus?userId='+this.userData.userId;
     this.paymentData=await this.http.get(URL).toPromise();
   }
+  changePassword(data){
+    var URL = this.url+'changePassword'
+    this.http.post(URL, data, { responseType: 'text' as 'json' }).subscribe(
+      (result) => {
+        console.log(result)
+        alert("password change succsessful")
+        this.router.navigate(['customerLogin']);
+      },
+      err => {
+        alert("something wrong")
+
+      }
+    )
+
+  }
+  allServiceProvider;
+ async getAllServiceProvider(){
+    var URL=this.url+'allServiceProvder';
+    this.allServiceProvider=await this.http.get(URL).toPromise();
+    console.log(this.allServiceProvider);
+
+  }
+  allCustomer;
+  async getAllCustomer(){
+    var URL=this.url+'allCustomer';
+    this.allCustomer=await this.http.get(URL).toPromise();
+    console.log(this.allCustomer);
+
+  }
+  invoiceDetails;
+  async getInvoiceDetails(){
+    var URL=this.url+'getInvoice?serviceRequestId=15';
+    this.invoiceDetails=await this.http.get(URL).toPromise();
+    console.log(this.invoiceDetails);
+  }
 
 
 

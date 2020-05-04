@@ -24,6 +24,9 @@ import { AddressComponent } from './address/address.component';
 import { AddProblemComponent } from './add-problem/add-problem.component';
 import { ServiceProviderRequestComponent } from './admin-pannel/admin-content/service-provider-request/service-provider-request.component';
 import { UserDashboardPortfolioComponent } from './user-dashboard/user-dashboard-portfolio/user-dashboard-portfolio.component';
+import { AllServiceProviderComponent } from './admin-pannel/admin-content/all-service-provider/all-service-provider.component';
+import { AllCustomerComponent } from './admin-pannel/admin-content/all-customer/all-customer.component';
+import { AllServiceRequestComponent } from './admin-pannel/admin-content/all-service-request/all-service-request.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,9 @@ import { UserDashboardPortfolioComponent } from './user-dashboard/user-dashboard
     AddProblemComponent,
     ServiceProviderRequestComponent,
     UserDashboardPortfolioComponent,
+    AllServiceProviderComponent,
+    AllCustomerComponent,
+    AllServiceRequestComponent,
   ],
   imports: [
     BrowserModule,
