@@ -1,18 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { Payment } from '../../customer/payment-stripe/payment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PaymentStatus } from '../payment-stripe/paymentstatus';
+import { Router } from '@angular/router';
+import { FeedbackComponent } from '../feedback/feedback.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { RaydService } from 'src/app/rayd.service';
 
 @Component({
   selector: 'app-payment-stripe',
   templateUrl: './payment-stripe.component.html',
   styleUrls: ['./payment-stripe.component.css']
 })
-export class PaymentStripeComponent implements OnInit {
 
-  grandTotal : number = 1;
+export class PaymentStripeComponent implements OnInit {
+  srId : number;
+  grandTotal : number;
+  paymentObject : any;
+   
   private paymentObj : Payment = new Payment();
-  constructor(private customerService : AppService) { }
+  constructor(private raydService:RaydService,private customerService : AppService, private router:Router,  private zone:NgZone, private SpinnerService: NgxSpinnerService) { }
 
 
   paymentForm = new FormGroup({
@@ -22,13 +30,31 @@ export class PaymentStripeComponent implements OnInit {
     expYear : new FormControl('', Validators.required),
     cvc : new FormControl('', Validators.required),
   });
-  ngOnInit() {
+  totalPrice=0;
+  serviceCharge=0;
+  subTotal=0;
+  taxAmount=0;
+  async ngOnInit() {
+    this.SpinnerService.show()
+    this.srId=this.raydService.requestId;
+    console.log(this.srId)
+
+    await this.raydService.getInvoiceDetails();
+      for(var i in this.raydService.invoiceDetails) {
+        console.log(i)
+          this.totalPrice = +this.raydService.invoiceDetails[i][12] * +this.raydService.invoiceDetails[i][14];
+          this.serviceCharge=this.raydService.invoiceDetails[i][13];
+          this.subTotal = this.subTotal + this.totalPrice;     
+      }
+      this.taxAmount = Math.round(this.subTotal / 12);
+      this.grandTotal = this.subTotal + Math.round(this.taxAmount)+ this.serviceCharge;
+      this.SpinnerService.hide();
   }
 
   public chargeCreditCard() {
+   
+    this.SpinnerService.show();
     console.log(this.paymentObj.expYear);
-
-   // let form = document.getElementsByTagName("form")[0];
     (<any>window).Stripe.card.createToken({
       number: this.paymentObj.cardNumber,
       exp_month: this.paymentObj.expMonth,
@@ -37,12 +63,26 @@ export class PaymentStripeComponent implements OnInit {
     }, (status: number, response: any) => {
       if (status === 200) {
         let token = response.id;
-        alert(token);
-        this.customerService.chargeCard(token, this.grandTotal);
+        // alert(token);
+       let resp1 = this.customerService.chargeCard(token, this.grandTotal);
+       resp1.subscribe(resp => {
+          this.paymentObject = resp;
+          let transactionId = this.paymentObject.id;
+          let grandTotal = this.paymentObject.amount/100;
+          let status = this.paymentObject.paid;
+          console.log(grandTotal+'@@@@@@@@@@@'+transactionId)
+
+          let paymentObj1: PaymentStatus = new PaymentStatus(this.srId, transactionId, grandTotal, status);
+          this.customerService.savePaymentStatus(paymentObj1);
+          this.SpinnerService.hide();
+          alert("Your transaction is successful.");
+          this.zone.run(() => this.router.navigate(['repairinvoice']));
+       });
       } else {
+        this.SpinnerService.hide();
         alert(response.error.message);
       }
     });
+    
   }
-
 }

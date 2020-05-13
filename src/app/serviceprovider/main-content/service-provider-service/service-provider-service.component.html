@@ -144,10 +144,12 @@
               Parts Details
              </div>
             <div class="card-body">
-              <div class="row" *ngFor="let i of [1]" style="margin-bottom: 10px;">
+              <div  formArrayName="products" style="margin-bottom: 10px;"   class="row">
+                <div *ngFor="let product of productFormGroup.controls; let i = index;">
+                <div [formGroupName]="i" class="row">
                 <div class="col-md-6">
                   <label for="exampleInputEmail1">Parts Name</label>
-                  <input type="text" class="form-control" placeholder="Enter parts name" formControlName="patsName">  
+                  <input type="text" class="form-control" placeholder="Enter parts name" formControlName="parts">  
                 </div>
                 <div class="col-md-3">
                   <label>Price</label>
@@ -157,10 +159,19 @@
                   <label>Qty</label>
                   <input type="number" class="form-control" placeholder="Enter Quantity" formControlName="quantity">  
                 </div>
+                </div>
+                </div>
               </div>
+              <i class="fas fa-minus-square minus" (click)="removeProduct(i)"></i>
+              <i class="fas fa-plus-square plus" (click)="addProduct()"></i>
+              <!-- <button class="btn btn-primary m-1" type="button" > Add Product </button> -->
+              <!-- <div class="form-group text-right">
+                <button class="btn btn-danger" type="button" > Remove </button>
+              </div> -->
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-6" style="margin-left: -30px;">
                   <label>Services Charge</label>
+                  
                   <input type="number" class="form-control" placeholder="Service charge" formControlName="serviceCharge"> 
 
                 </div>

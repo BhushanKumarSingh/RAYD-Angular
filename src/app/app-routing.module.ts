@@ -24,6 +24,9 @@ import { AddProblemComponent } from './add-problem/add-problem.component';
 import { AllServiceProviderComponent } from './admin-pannel/admin-content/all-service-provider/all-service-provider.component';
 import { AllCustomerComponent } from './admin-pannel/admin-content/all-customer/all-customer.component';
 import { AllServiceRequestComponent } from './admin-pannel/admin-content/all-service-request/all-service-request.component';
+import { AllQueriesComponent } from './admin-pannel/admin-content/all-queries/all-queries.component';
+import { FeedbackComponent } from './customer/feedback/feedback.component';
+import { PaymentPaytmComponent } from './customer/payment-paytm/payment-paytm.component';
 
 
 const routes: Routes = [
@@ -40,17 +43,22 @@ const routes: Routes = [
   {path : "changepassword", component : ChangePasswordComponent},
   {path : "repairinvoice", component : CustomerInvoiceComponent},
   {path : "paystripe",  component : PaymentStripeComponent},
+  {path : "payPaytm", component : PaymentPaytmComponent},
+  {path:"feedback",component:FeedbackComponent},
   
   {path:"admin",component:AdminPannelComponent,
     children:[
+      {path:"",component:ServiceProviderRequestComponent},
       {path:"serviceProviderRequest",component:ServiceProviderRequestComponent},
       {path:"allServiceProvider",component:AllServiceProviderComponent},
       {path:"allCustomer",component:AllCustomerComponent},
-      {path:"allServiceRequest",component:AllServiceRequestComponent}
+      {path:"allServiceRequest",component:AllServiceRequestComponent},
+      {path:"allqueries",component:AllQueriesComponent}
     ]
   },
   {path : 'serviceProvider', component : ServiceproviderComponent,
     children : [
+      {path : '', component : SpDashboardComponent},
       {path : 'dashboard', component : SpDashboardComponent},
       {path : 'services', component : ServiceProviderServiceComponent},
       {path : 'technician', component : TechnicianComponent,

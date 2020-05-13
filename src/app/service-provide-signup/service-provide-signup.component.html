@@ -36,8 +36,8 @@
                     </div>
                   </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary" routerLink="/addresspage" routerLinkActive="active" (click)="set()">Continue</button><br>
-                    <a class="alreadyAcc" routerLink="/loginpage" routerLinkActive="active">Already have an Account?</a>
+                    <button type="submit" class="btn btn-primary" routerLink="/addresspage" routerLinkActive="active" (click)="set()" [disabled]="!serviceProviderForm.valid">Continue</button><br>
+                    <a class="alreadyAcc" routerLink="/loginPage" routerLinkActive="active">Already have an Account?</a>
                 </div>
                 </div>
             </form>

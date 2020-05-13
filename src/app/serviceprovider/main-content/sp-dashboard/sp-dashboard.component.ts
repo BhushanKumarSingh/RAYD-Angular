@@ -9,35 +9,36 @@ import { RaydService } from 'src/app/rayd.service';
   styleUrls: ['./sp-dashboard.component.css']
 })
 export class SpDashboardComponent implements OnInit {
-
+  spId:number = this.raydService.serviceData.serviceProviderId;
   serviceProviderProfile : any;
   serviceProviderAddress : any;
   serviceProviderService : any;
   serviceProvideServiceCatagory : any;
 
-  constructor(private spService:ServiceproviderService,private raysService:RaydService) { }
-  address:any;
-  spId:number = this.raysService.serviceData.serviceProviderId;
+  response1:any;
+
+  constructor(private raydService:RaydService,private spService:ServiceproviderService) { }
 
   ngOnInit() {
     let resp1 = this.spService.displayServiceProviderProfile(this.spId);
     resp1.subscribe((data)=>
     {
       this.serviceProviderProfile = data;
-      // this.serviceProviderAddress = Object.values(this.serviceProviderProfile.address);
-       console.log(this.serviceProviderAddress);
-      // console.log(Object.values(this.serviceProviderProfile));
-      // console.log(JSON.stringify( this.serviceProviderProfile.address));
-      // console.log(JSON.stringify( this.serviceProviderProfile.category));
-      
+       console.log(this.serviceProviderProfile);
     });
-
-    // let resp2 = this.spService.displayServiceProviderAddress(this.spId);
-    // resp1.subscribe((data)=>
-    // {
-    //   this.serviceProviderAddress = data;
-    //   console.log("serviceProviderAddress :" + this.serviceProviderAddress.completeAddress);
-    // });
+  }
+  public addProductName(productName)  {
+    let resp2 = this.spService.addProduct(this.spId, productName);
+    resp2.subscribe((data) => {
+      this.response1 = data;
+      alert(this.response1);
+      this.ngOnInit();
+    },
+    error => {
+      alert(error.error.message);  
+    }
+    );
+    
   }
 
 }

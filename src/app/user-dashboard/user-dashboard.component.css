@@ -21,10 +21,10 @@ nav{
   .dropdown>.dropdown-toggle:active {
       pointer-events: none;
   }
-  .cart,.plus{
+  .cart,.plus,.dashboard{
      font-size: 15px;
      color: orange;
-    
+     
   }
   .textProfile{
     font-size: 16px;
@@ -129,12 +129,12 @@ nav{
   }
   .status1{
     float: right;
-    color: rgb(0, 0, 0);
+    color: green;
     font-weight: bolder;
   }
   .status2{
     float: right;
-    color: green;
+    color: rgb(20, 36, 20);
     font-weight: bolder;
   }
   .status3{
@@ -146,4 +146,303 @@ nav{
     float: right;
     color: chocolate;
     font-weight: bolder;
+  }
+  .portfolioPadding{
+    padding: 18px;
+  }
+
+
+
+
+
+
+
+.d-sm-flex p {
+  font-size: 14px;
+  margin-bottom: 7px
+  }
+  
+  .d-sm-flex .cursor-pointer {
+  cursor: pointer
+  }
+  
+  .d-sm-flex a {
+  text-decoration: none !important;
+  color: #651FFF !important
+  }
+  
+  .d-sm-flex .bold {
+  font-weight: 600
+  }
+  
+  .d-sm-flex .small {
+  font-size: 12px !important;
+  letter-spacing: 0.5px !important
+  }
+  
+  .d-sm-flex .Today {
+  color: rgb(83, 83, 83)
+  }
+  
+  .d-sm-flex .btn-outline-primary {
+  background-color: #fff !important;
+  color: #4bb8a9 !important;
+  border: 1.3px solid #4bb8a9;
+  font-size: 12px;
+  border-radius: 0.4em !important
+  }
+  
+  .d-sm-flex .btn-outline-primary:hover {
+  background-color: #4bb8a9 !important;
+  color: #fff !important;
+  border: 1.3px solid #4bb8a9
+  }
+  
+  .d-sm-flex .btn-outline-primary:focus,
+  .btn-outline-primary:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #42A5F5 !important
+  }
+  
+  .d-sm-flex #progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: #455A64;
+  padding-left: 0px;
+  margin-top: 30px
+  }
+  
+  .d-sm-flex #progressbar li {
+  list-style-type: none;
+  font-size: 13px;
+  width: 33.33%;
+  float: left;
+  position: relative;
+  font-weight: 400;
+  color: #455A64 !important
+  }
+  
+  .d-sm-flex #progressbar #step1:before {
+  content: "1";
+  color: #fff;
+  width: 29px;
+  margin-left: 15px !important;
+  padding-left: 11px !important
+  }
+  
+  .d-sm-flex #progressbar #step2:before {
+  content: "2";
+  color: #fff;
+  width: 29px
+  }
+  
+  .d-sm-flex #progressbar #step3:before {
+  content: "3";
+  color: #fff;
+  width: 29px;
+  margin-right: 15px !important;
+  padding-right: 11px !important
+  }
+  
+  .d-sm-flex #progressbar li:before {
+  line-height: 29px;
+  display: block;
+  font-size: 12px;
+  background: #455A64;
+  border-radius: 50%;
+  margin: auto
+  }
+  
+  .d-sm-flex #progressbar li:after {
+  content: '';
+  width: 121%;
+  height: 2px;
+  background: #455A64;
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 15px;
+  z-index: -1
+  }
+  
+  .d-sm-flex #progressbar li:nth-child(2):after {
+  left: 50%
+  }
+  
+  .d-sm-flex #progressbar li:nth-child(1):after {
+  left: 25%;
+  width: 121%
+  }
+  
+  .d-sm-flex #progressbar li:nth-child(3):after {
+  left: 25% !important;
+  width: 50% !important
+  }
+  
+  .d-sm-flex #progressbar li.active:before,
+  #progressbar li.active:after {
+  background:#007bff
+  }
+  
+  .d-sm-flex .card {
+  width: 22rem;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 0
+  }
+  
+  .d-sm-flex small {
+  font-size: 12px !important
+  }
+  
+  .d-sm-flex .a {
+  justify-content: space-between !important
+  }
+  
+  .border-line {
+  border-right: 1px solid rgb(226, 206, 226)
+  }
+  
+  .d-sm-flex .card-footer img {
+  opacity: 0.3
+  }
+  
+  .d-sm-flex .card-footer h5 {
+  font-size: 1.1em;
+  color: #8C9EFF;
+  cursor: pointer
+  }
+  .d-sm-flex .status{
+    float: right;
+  }
+
+
+
+
+
+.tracking .card {
+  z-index: 0;
+  background-color: rgba(0,0,0,.03);
+  padding-bottom: 20px;
+  
+  border-radius: 10px;
+  
+  }
+  
+  .tracking .top {
+  padding-top: 40px;
+  padding-left: 13% !important;
+  padding-right: 13% !important
+  }
+  .tracking .top1 {
+  padding-top: 12px;
+  padding-left: 13% !important;
+  padding-right: 13% !important
+  }
+  
+  .tracking #progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: #455A64;
+  padding-left: 0px;
+  margin-top: 30px
+  }
+  
+  .tracking #progressbar li {
+  list-style-type: none;
+  font-size: 13px;
+  width: 33%;
+  float: left;
+  position: relative;
+  font-weight: 400;
+  }
+  
+  .tracking #progressbar .step0:before {
+  font-family: FontAwesome;
+  content: "\f10c";
+  color: #fff
+  }
+  
+  .tracking #progressbar li:before {
+  width: 40px;
+  height: 40px;
+  line-height: 45px;
+  display: block;
+  font-size: 20px;
+  background: #C5CAE9;
+  border-radius: 50%;
+  margin: auto;
+  padding: 0px
+  }
+  
+  .tracking #progressbar li:after {
+  content: '';
+  width: 100%;
+  height: 12px;
+  background: #C5CAE9;
+  position: absolute;
+  left: 0;
+  top: 16px;
+  z-index: -1
+  }
+  
+  .tracking #progressbar li:last-child:after {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  position: absolute;
+  left: -50%
+  }
+  
+  .tracking #progressbar li:nth-child(2):after,
+  #progressbar li:nth-child(3):after {
+  left: -50%
+  }
+  
+  .tracking #progressbar li:first-child:after {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  position: absolute;
+  left: 50%
+  }
+  
+  .tracking #progressbar li:last-child:after {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px
+  }
+  
+  .tracking #progressbar li:first-child:after {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px
+  }
+  
+  .tracking #progressbar li.active:before,
+  #progressbar li.active:after {
+  background: #007bff;
+  }
+  
+  .tracking #progressbar li.active:before {
+  font-family: FontAwesome;
+  content: "\f00c"
+  }
+  
+  .tracking .icon {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px
+  }
+  
+  .tracking .icon-content {
+  padding-bottom: 20px
+  }
+  
+  
+  @media screen and (max-width: 992px) {
+  .tracking .icon-content {
+  width: 50%
+  }
+  }
+  #exampleModalCenter1 .modal-dialog{
+    width: 80% !important;
+    min-width: 80%;
   }

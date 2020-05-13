@@ -5,8 +5,10 @@
             <h2 class="text">Repair At Your Doorstep</h2>
         </a>
         <form class="form-inline">
+          <i class="fas fa-tachometer-alt dashboard" aria-hidden="true"></i>
+          <a type="button" class="nav-link" (click)="dashboard()">Dashboard</a>
              <i class="fas fa-plus-square plus"></i>
-             <a type="button" class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" (click)="fetchAddress()">Add problem</a>
+             <a type="button" class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" (click)="fetchAddress()">Service Request</a>
             
              <i class="fas fa-bell-slash cart" ></i><sup>{{notification}}</sup>
              <a class="nav-link" data-toggle="modal" data-target="#exampleModalLong" (click)="notifiaction()">Notification </a>
@@ -52,7 +54,7 @@
             <p style="float: right;color: green;font-weight: bolder;">Completed</p>
           </div>
           <div class="row">
-            <a routerLink="/paystripe" class="btn btn-primary" style="float: right;">Pay Now</a>
+            <a class="btn btn-outline-success" style="float: right;" (click)="setRequestId(data.serviceRequestId)">Pay Now</a>
           </div>
         </div>
       </div>
@@ -62,10 +64,10 @@
 
 </div>
 
-<div class="container">
+<div *ngIf="view" class="container">
   <div>
     <div class="modal-header">
-        <h3 style=" color: blue;margin: auto; padding: 20px;">Your requested problem </h3 >
+        <h3 style=" color: blue;margin: auto; padding: 20px;">All Service Request</h3 >
       </div>
       <div class="row">
       <div class="col-md-6">
@@ -90,7 +92,7 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
                 optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos.
                 Odit sed qui, dolorum!.</p>
-                <a class="btn btn-pink"><i class="fas fa-clone left"></i> View Details</a>
+                <a class="btn btn-pink" data-toggle="modal" data-target="#ViewDetails"><i class="fas fa-clone left"></i> View Details</a>
             </div>
             </div>
 
@@ -108,7 +110,7 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
               optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos.
               Odit sed qui, dolorum!.</p>
-            <a class="btn btn-pink"><i class="fas fa-clone left"></i> View Details</a>
+            <a class="btn btn-pink" data-toggle="modal" data-target="#ViewDetails"><i class="fas fa-clone left"></i> View Details</a>
           </div>
         </div>
         
@@ -128,7 +130,7 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
                 optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos.
                 Odit sed qui, dolorum!.</p>
-                <a class="btn btn-pink"><i class="fas fa-clone left"></i> View Details</a>
+                <a class="btn btn-pink" data-toggle="modal" data-target="#ViewDetails"><i class="fas fa-clone left"></i> View Details</a>
             </div>
             </div>
 
@@ -146,7 +148,7 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
               optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos.
               Odit sed qui, dolorum!.</p>
-            <a class="btn btn-pink"><i class="fas fa-clone left"></i> View Details</a>
+            <a class="btn btn-pink" data-toggle="modal" data-target="#ViewDetails"><i class="fas fa-clone left"></i> View Details</a>
           </div>
         </div>
         
@@ -199,14 +201,14 @@
           <div class="row">
             <div class="col-md">
               <div class="form-group">
-                <label>Product Name</label>
+                <label>Product Name<sup>*</sup></label>
                 <input type="text" class="form-control" placeholder="TV,Fan,Bed..." formControlName="productName">
               </div>
  
             </div>
             <div class="col-md">
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Product Type</label>
+                <label for="exampleFormControlSelect1">Product Type<sup>*</sup></label>
                 <select class="form-control" id="exampleFormControlSelect1" formControlName="productType">
                   <option>Electronics</option>
                   <option>Plumbing</option>
@@ -220,7 +222,7 @@
           <div class="row">
             <div class="col-md">
               <div class="form-group">
-                <label>Company Name</label>
+                <label>Company Name<sup>*</sup></label>
                 <input type="text" class="form-control" placeholder="Enter company name" formControlName="companyName">
               </div>
               
@@ -228,7 +230,7 @@
             </div>
             <div class="col-md">
                <div class="form-group">
-                <label>Model Number</label>
+                <label>Model Number<sup>*</sup></label>
                 <input type="text" class="form-control" placeholder="Enter model number" formControlName="modelNumber">
               </div>
  
@@ -238,21 +240,21 @@
           <div class="row">
             <div class="col-md">
               <div class="form-group">
-                <label for="exampleFormControlTextarea1">Description</label>
+                <label for="exampleFormControlTextarea1">Description<sup>*</sup></label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Brief about your problem" formControlName="description"></textarea>
               </div>
             </div>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="exampleFormControlFile1">Product Image</label>
             <input type="file" class="form-control-file" id="exampleFormControlFile1">
-          </div>
+          </div> -->
         </form>
       </div>
     </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a href="#selectAddress" data-toggle="modal" data-dismiss="modal" class="btn btn-info" (click)="address();addProblemData();">Next</a>
+        <button href="#selectAddress" data-toggle="modal" data-dismiss="modal" class="btn btn-info" (click)="address();addProblemData();" [disabled]="!addProblemForm.valid">Next</button>
 
       
     </div>
@@ -372,8 +374,8 @@
     </div>
       <div class="modal-footer">
        
-        <a href="#exampleModalCenter" data-toggle="modal" data-dismiss="modal" class="btn btn-danger">Previous</a>
-        <a data-toggle="modal" data-dismiss="modal" class="btn btn-success" (click)="addNewAddress()">Save</a>
+        <a href="#exampleModalCenter" data-toggle="modal" data-dismiss="modal" class="btn btn-info">Previous</a>
+        <button data-toggle="modal" data-dismiss="modal" class="btn btn-success" (click)="addNewAddress()" [disabled]="!addressForm.valid">Save</button>
 
       </div>
    
@@ -511,7 +513,266 @@
        
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">View Details</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="getPortfolioDetails()">View Details</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" id="ViewDetails" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="card-header row">
+        <h4>View Details About services</h4>
+      </div>
+      Electronic(analog or digital) equipment intended for everyday use, typically in private homes.We provide service for Consumer electronics which includes devices used for entertainment (flatscreen TVs, DVD players, video games, remote control cars, etc.), communications (telephones, cell phones, e-mail-capable laptops, etc.), and home-office activities (e.g., desktop computers, printers, paper shredders, etc.).
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div *ngIf=!view class="container">
+  <h3>Portfolio Details</h3>
+<!-- <div style="border: 1px solid white;" *ngFor="let data of portfolioData;index as i">
+  
+  <div class="row request" >
+    <div class="col-sm-6 portfolioPadding">
+      <div class="card" style="border: white;">
+        <div class="card-header row">
+          <div class="col-md-10 addressType">
+            Service Request
+            </div>
+            <div class="col-md-2">
+              <div class="row">
+                <h6 style="float: right;">Date</h6>
+              </div>
+              <div class="row">
+                {{potfolioDetails1[i][12]}}
+              </div>
+            </div>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{potfolioDetails1[i][2]}}</h5>
+          <h6 class="card-title">{{potfolioDetails1[i][1]}} {{potfolioDetails1[i][5]}}</h6>
+          <p class="card-text">{{potfolioDetails1[i][3]}}</p>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 portfolioPadding">
+      <div class="card" style="border: white;">
+        <div class="row card-header addressType">
+          <div class="col-md-8">
+            Address
+          </div>
+          <div *ngIf="data.status=='COMPLETED' && data.payment.paymentStatus=='COMPLETED'" class="col-md-4">
+            <button type="button" class="btn btn-outline-success" (click)="getInvoice(data.serviceRequestId)">Get Invoice Details</button>
+          </div>
+         </div>
+        <div class="card-body">
+          <p class="card-text">{{potfolioDetails1[i][9]}}</p>
+          <p>{{potfolioDetails1[i][8]?.split(',')[1]}} {{potfolioDetails1[i][8]?.split(',')[0]}}</p>
+          <p style="font-weight: bolder;">{{potfolioDetails1[i][8]?.split(',')[2]}} , {{potfolioDetails1[i][8]?.split(',')[3]}} {{potfolioDetails1[i][10]}}</p> 
+         
+          <p *ngIf="open(data.status)" class="status1">Open</p>
+          <p *ngIf="accepted(data.status)" class="status2">Accepeted</p>
+          <p *ngIf="completed(data.status)" class="status3">Completed</p>
+          <p *ngIf="visited(data.status)" class="status4">Visited</p>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+  <hr style="border-bottom: 2px solid blue !important;">
+</div> -->
+
+
+
+<div class="container d-sm-flex justify-content-between">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let data of portfolioData;index as i">
+  <div class="card px-2 mt-3">
+      <div class="card-header bg-white">
+          <div class="row justify-content-between">
+              <div class="col">
+                  <p class="text-muted"> Order ID <span class="font-weight-bold text-dark">{{potfolioDetails1[i][0]}}</span></p>
+                  <p class="text-muted"> Placed On <span class="font-weight-bold text-dark">{{potfolioDetails1[i][12]}}</span> </p>
+              </div>
+              
+          </div>
+      </div>
+      <div class="card-body">
+          <div class="media flex-column flex-sm-row">
+              <div class="media-body ">
+                  <h5 class="bold">{{potfolioDetails1[i][2]}}</h5>
+                  <p><strong> {{potfolioDetails1[i][1]}} {{potfolioDetails1[i][5]}}</strong></p>
+                  <p class="text-muted">{{potfolioDetails1[i][3]}}</p>
+                  <h6 class="mt-3 mb-4 bold" *ngIf="totalAmount(data.payment)"> <span class="mt-5">&#x20B9;</span>{{data.payment.totalAmount}}</h6>
+                  <h6 class="mt-3 mb-4 bold" *ngIf="!totalAmount(data.payment)"> <span class="mt-5">&#x20B9;</span>0</h6>
+                  <p class="text-muted">Tracking Status on: <span class="Today">{{ now | date:'medium' }}, Today</span></p>
+                   <button type="button" class="btn btn-outline-primary status" *ngIf="open(data.status)">Open</button>
+                   <button type="button" class="btn btn-outline-info status" *ngIf="accepted(data.status)">Accepeted</button>
+                   <button type="button" class="btn btn-outline-success status"  *ngIf="completed(data.status)" >Completed</button>
+                   <button type="button" class="btn btn-outline-success dark status"  *ngIf="visited(data.status)" >Visited</button>
+              </div>
+          </div>
+      </div>
+      
+      <div class="row px-3">
+          <div class="col">
+              <ul id="progressbar">
+                  <li *ngIf="accepted(data.status) || visited(data.status) || completed(data.status)" class="step0 active " id="step1">Process</li>
+                  <li *ngIf="!(accepted(data.status) || visited(data.status) || completed(data.status))" class="step0" id="step1">Process</li>
+                  <li *ngIf="visited(data.status) || completed(data.status)" class="step0 active text-center" id="step2">Visited</li>
+                  <li *ngIf="!(visited(data.status) || completed(data.status))" class="step0 text-center" id="step2">Visited</li>
+                  <li *ngIf="completed(data.status)" class="step0 active text-muted text-right" id="step3">Completed</li>
+                  <li *ngIf="!completed(data.status)" class="step0 text-muted text-right" id="step3">Completed</li>
+              </ul>
+          </div>
+      </div>
+      <div class="card-footer bg-white px-sm-3 pt-sm-4 px-0">
+          <div class="row text-center ">
+              <div class="col my-auto border-line ">
+                  
+              </div>
+              <div class="col my-auto  ">
+                  <h5 data-toggle="modal" data-target="#exampleModalCenter1" (click)="requestDetails(data,i)">View Details</h5>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+
+</div>
+
+<!-- Modal -->
+<div *ngIf="serviceRequest;" class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+
+  <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+  <div class="modal-dialog modal-dialog-centered" role="document">
+
+
+    <div class="modal-content">
+      <!-- <div class="modal-header"> -->
+        <!-- <div class="row justify-content-between">
+          <div class="col-sm-6">
+              <p class="text-muted"> Order ID <span class="font-weight-bold text-dark">{{request.serviceRequestId}}</span></p>
+              <p class="text-muted"> Placed On <span class="font-weight-bold text-dark">{{request.localDate}}</span> </p>
+          </div>
+          <div class="col-sm-6">
+            <div  *ngIf="request.status=='COMPLETED' && request.payment.paymentStatus=='COMPLETED'" class="col-md-4">
+              <button style="float: right;" type="button" class="btn btn-outline-success" (click)="getInvoice(request.serviceRequestId)">Get Invoice Details</button>
+            </div>
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+          <!-- </div>
+         
+          
+       </div> --> 
+       <div class="row card-header addressType">
+        <div class="col-md-4">
+          <p class="text-muted"> Order ID <span class="font-weight-bold text-dark">{{request.serviceRequestId}}</span></p>
+              <p class="text-muted"> Placed On <span class="font-weight-bold text-dark">{{request.localDate}}</span> </p>
+        </div>
+        <div class="col-md-4" style="text-align: center;">
+          Service Request Details
+        </div>
+        <div class="col-md-3">
+        <div  *ngIf="request.status=='COMPLETED' && request.payment.paymentStatus=='COMPLETED'" class="col-md-4">
+          <button type="button" class="btn btn-outline-success" data-dismiss="modal" (click)="getInvoice(request.serviceRequestId)">Get Invoice Details</button>
+        </div>
+        </div>
+        <div class="col-md-1">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+       </div>
+       
+        
+      
+      <div class="modal-body">
+
+        <div class="container tracking">
+          <div class="card">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="card"style="border: white;">
+                  <div class="card-header addressType">
+                    {{request.productType}}
+                   </div>
+                  <div class="card-body" >
+                    <h5 class="card-title">{{request.productName}}</h5>
+                    <h6 class="card-title">{{request.companyName}} {{request.modelNumber}}</h6>
+                    <p class="card-text">{{request.description}}</p>
+                    
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card" style="border: white;">
+                  <div class="card-header addressType">
+                    Address
+                   </div>
+                  <div class="card-body">
+                    <p class="card-text">{{potfolioDetails1[j][9]}}</p>
+                    <p>{{potfolioDetails1[j][8]?.split(',')[1]}} {{potfolioDetails1[j][8]?.split(',')[0]}}</p>
+                    <p style="font-weight: bolder ;">{{potfolioDetails1[j][8]?.split(',')[2]}} , {{potfolioDetails1[j][8]?.split(',')[3]}} {{potfolioDetails1[j][10]}}</p> 
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="row d-flex justify-content-center">
+          <div class="col-12">
+          <ul id="progressbar" class="text-center">
+          <li *ngIf="accepted(request.status) || visited(request.status) || completed(request.status)" class="active step0"></li>
+          <li *ngIf="!(accepted(request.status) || visited(request.status) || completed(request.status))" class=" step0"></li>
+          <li *ngIf="visited(request.status) || completed(request.status)" class="active step0"></li>
+          <li *ngIf="!(visited(request.status) || completed(request.status))" class=" step0"></li>
+          <li *ngIf="completed(request.status)" class="active step0"></li>
+          <li *ngIf="!completed(request.status)" class=" step0"></li>
+          </ul>
+          </div>
+          
+          </div>
+          <div class="row justify-content-between top1">
+          <div class="row d-flex icon-content"> <img class="icon" src="https://i.imgur.com/9nnc9Et.png">
+          <div class="d-flex flex-column">
+          <p class="font-weight-bold">Order<br>Processed</p>
+          </div>
+          </div>
+          <div class="row d-flex icon-content"> <img class="icon" src="https://i.imgur.com/u1AzR7w.png">
+          <div class="d-flex flex-column">
+          <p class="font-weight-bold">Order<br>Visited</p>
+          </div>
+          </div>
+          <div class="row d-flex icon-content"> <img class="icon" src="https://i.imgur.com/TkPm63y.png">
+          <div class="d-flex flex-column">
+          <p class="font-weight-bold">Order<br>completed</p>
+          </div>
+          </div>
+          
+          </div>
+          </div>
+          </div>
+          
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

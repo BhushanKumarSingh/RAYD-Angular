@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from "../app.component";
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RaydService } from '../rayd.service';
 import { Chart } from "chart.js";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -11,25 +12,25 @@ import { Chart } from "chart.js";
 })
 export class UserDashboardComponent implements OnInit {
   addProblemForm=new FormGroup({
-    productName:new FormControl(''),
-    productType:new FormControl(''),
-    modelNumber:new FormControl(''),
-    description:new FormControl(''),
-    companyName:new FormControl('')
+    productName:new FormControl('',Validators.required),
+    productType:new FormControl('',Validators.required),
+    modelNumber:new FormControl('',Validators.required),
+    description:new FormControl('',Validators.required),
+    companyName:new FormControl('',Validators.required)
 
   })
   addressForm = new FormGroup({
-    locality:new FormControl(''),
-    city:new FormControl(''),
-    address:new FormControl(''),
-    landmark:new FormControl(''),
-    state:new FormControl(''),
-    pinCode:new FormControl(''),
-    addressType:new FormControl('')
+    locality:new FormControl('',Validators.required),
+    city:new FormControl('',Validators.required),
+    address:new FormControl('',Validators.required),
+    landmark:new FormControl('',Validators.required),
+    state:new FormControl('',Validators.required),
+    pinCode:new FormControl('',Validators.required),
+    addressType:new FormControl('',Validators.required)
 
   })
 
-  constructor(private raydService:RaydService ) { }
+  constructor(private raydService:RaydService,private router:Router) { }
   addressData;
   notification;
   userName;
@@ -38,7 +39,9 @@ export class UserDashboardComponent implements OnInit {
   PieChart=[];
   BarChart=[];
   paymentData;
+  public now: Date = new Date();
  async ngOnInit() {
+  this.now = new Date();
     this.notification=1;
     this.raydService.getRequest();
     await this.raydService.getNotCompletedPayment();
@@ -148,26 +151,45 @@ portfolioDetails(){
   this.portfolioData=this.raydService.problemRequested;
   console.log(this.portfolioData);
 }
+active="";
 open(status){
-  if(status=='OPEN')
-  return true;
-  else
+  if(status=='OPEN'){
+    this.active="active";
+    return true;
+  }
+  else{
+  this.active="";
   return false;
+}
 }
 accepted(status){
  
   if(status=='ACCEPTED'){
+    this.active="active";
   return true;
 }
+  else{
+    this.active="";
+  }
 
 }
 completed(status){
-  if(status=='COMPLETED')
+  if(status=='COMPLETED'){
+    this.active="active";
   return true;
+  }
+  else{
+    this.active="";
+  }
 }
 visited(status){
-  if(status=='VISITED')
+  if(status=='VISITED'){
+    this.active="active";
   return true;
+  }
+  else{
+    this.active="";
+  }
 }
 checkPortfolio(){
 //   if(this.portfolioData.length>0)
@@ -179,10 +201,48 @@ checkPortfolio(){
  async notifiaction(){
    await this.raydService.getVistingDetails();
    this.visitingMessage=this.raydService.vistingMessage;
+   console.log(this.visitingMessage)
 
  }
- 
+ setRequestId(requestId){
+  this.raydService.requestId=requestId;
+  this.router.navigate(["paystripe"]);
+ }
 
+ view=true;
+ dashboard(){
+   this.view=true;
+   this.ngOnInit();
+ }
+
+
+ potfolioDetails1;
+ async getPortfolioDetails(){
+   this.view=false;
+   await this.raydService.getServiceRequestDetails();
+   this.potfolioDetails1=this.raydService.portfolioDetails1;
+   console.log(this.potfolioDetails1)
+ }
+ getInvoice(requestId){
+  this.raydService.requestId=requestId;
+  this.router.navigate(["repairinvoice"]);
+ }
+ 
+ totalAmount(amount){
+   if(amount==null)
+   return false;
+   else
+   return true;
+
+ }
+ request;
+ j;
+ serviceRequest=false;
+ requestDetails(data,i){
+    this.request=data;
+    this.j=i;
+    this.serviceRequest=true;
+ }
 
 
 

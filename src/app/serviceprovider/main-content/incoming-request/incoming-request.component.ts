@@ -44,6 +44,7 @@ export class IncomingRequestComponent implements OnInit {
      await this.raydService.getOpenRequest();
      this.openRequest=this.raydService.openRequest;
      this.getOpenRequestData();
+     
      console.log(this.openRequest);
     
   }

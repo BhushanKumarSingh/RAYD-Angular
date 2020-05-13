@@ -4,6 +4,8 @@ import * as jsPDF from 'jspdf'
 import * as html2canvas from 'html2canvas';
 import { RaydService } from 'src/app/rayd.service';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-customer-invoice',
@@ -25,7 +27,7 @@ export class CustomerInvoiceComponent implements OnInit {
 
 myDate = new Date();
 date;
-  constructor(private raydService : RaydService,private datePipe: DatePipe) { 
+  constructor(private spinerService:NgxSpinnerService,private raydService : RaydService,private datePipe: DatePipe,private router:Router) { 
     this.date = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
   invoiceDetails=[]
@@ -46,6 +48,7 @@ date;
   }
 
   public generatePdf() {
+    // this.spinerService.show();
     var data = document.getElementById('invoiceForm');
     html2canvas(data).then((canvas) =>{
       var imgWidth = 208;
@@ -58,7 +61,13 @@ date;
       var position = 0;
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
       pdf.save('File.pdf');
+      alert("Downloaded")
+      // this.spinerService.hide();
+      this.router.navigate(["feedback"]);
+      
     });
+
+    
   }
 
 }

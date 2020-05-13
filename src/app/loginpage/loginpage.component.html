@@ -25,15 +25,13 @@
            		    	<input type="password" class="input" placeholder="Password" formControlName="password">
             	   </div>
             	</div>
-            	<a href="#">Forgot Password?</a>
+            	<a routerLink="/changepassword">Forgot Password?</a>
             	<input type="submit" class="btn" value="Login" (click)="login()">
             </form>
         </div>
     </div>
     
 </body>
-
-<!-- 
-github account
---------------
-manoranjanm1999 ---- manoranjan-bhusan2020 -->
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+    <p style="color: white">Please Wait fetching your details. </p>  
+</ngx-spinner> 

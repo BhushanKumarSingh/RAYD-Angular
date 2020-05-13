@@ -39,16 +39,22 @@
       <div class="d-flex">
         <h2 class="align-self-center">My Services</h2>
         <div class="ml-auto p-2">
-          <i class="fas fa-plus-square" id="addProduct"></i>
+          <div class="d-flex">
+            <input #productName type="text" class="form-control mr-2" id="inputProductName" placeholder="Enter product name">
+            <i class="fas fa-plus-circle mt-1" id="addProduct" (click)="addProductName(productName.value)"></i>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="d-flex align-content-end flex-wrap" >
       <div *ngFor = "let serviceProviderService of serviceProviderProfile.category">
-        <div class="alert alert-primary" role="alert" id="productInfo">
-          {{serviceProviderService.productName}}
-        </div>
+        <!-- <div class="alert alert-primary" role="alert" id="productInfo"> -->
+         
+          <a class="card-text" *ngFor="let c of serviceProviderService.productName?.split(',')">
+            <button class="btn btn-info" style="margin: 2px;">{{c}}</button>
+        </a>
+        <!-- </div> -->
       </div>
     </div>
   </div>

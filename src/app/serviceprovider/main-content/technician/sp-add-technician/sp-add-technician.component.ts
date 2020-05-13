@@ -24,7 +24,7 @@ export class SpAddTechnicianComponent implements OnInit {
     address : new FormControl('', Validators.required),
   });
 
-  constructor(private spService:ServiceproviderService,private raydService:RaydService) { }
+  constructor(private raydService:RaydService,private spService:ServiceproviderService) { }
 
   ngOnInit() {
   }

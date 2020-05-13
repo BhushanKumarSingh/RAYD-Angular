@@ -19,7 +19,7 @@ export class AllServiceRequestComponent implements OnInit {
       email: [null],
       phone: [null],
       productType: [null],
-      products: this.fb.array([this.createProduct()])
+      products: this.fb.array([this.createProduct()]),
     });
   
   // set contactlist to the form control containing contacts
@@ -29,6 +29,8 @@ export class AllServiceRequestComponent implements OnInit {
   createProduct(): FormGroup {
     return this.fb.group({
       productName: [null, Validators.compose([Validators.required])],
+      productName1: [null, Validators.compose([Validators.required])],
+      productName2: [null, Validators.compose([Validators.required])],
     });
   }
   // add a contact form group

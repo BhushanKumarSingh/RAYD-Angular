@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from "chart.js";
 import { RaydService } from '../rayd.service';
-
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -9,12 +9,14 @@ import { RaydService } from '../rayd.service';
 })
 export class HomepageComponent implements OnInit {
 
-  constructor(private raydService:RaydService) { }
+  constructor(private SpinnerService: NgxSpinnerService,private raydService:RaydService) { }
   PieChart=[];
   BarChart=[];
 
   async ngOnInit() {
+    this.SpinnerService.show();
     await this.raydService.getrequestType();
+    this.SpinnerService.hide();
     this.PieChart=new Chart("pieChart",{
       type:'pie',
       data:{
@@ -76,6 +78,7 @@ export class HomepageComponent implements OnInit {
       }
 
     })
+   
   }
 
 }

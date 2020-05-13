@@ -11,7 +11,6 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CustomerInvoicePdfComponent } from './customer/customer-invoice-pdf/customer-invoice-pdf.component';
 import { CustomerInvoiceComponent } from './customer/customer-invoice/customer-invoice.component';
-import { PaymentStripeComponent } from './customer/payment-stripe/payment-stripe.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { ServiceProvideSignupComponent } from './service-provide-signup/service-provide-signup.component';
@@ -27,7 +26,12 @@ import { UserDashboardPortfolioComponent } from './user-dashboard/user-dashboard
 import { AllServiceProviderComponent } from './admin-pannel/admin-content/all-service-provider/all-service-provider.component';
 import { AllCustomerComponent } from './admin-pannel/admin-content/all-customer/all-customer.component';
 import { AllServiceRequestComponent } from './admin-pannel/admin-content/all-service-request/all-service-request.component';
-
+import { FeedbackComponent } from './customer/feedback/feedback.component';
+import { PaymentStripeComponent } from './customer/payment-stripe/payment-stripe.component';
+import { AllQueriesComponent } from './admin-pannel/admin-content/all-queries/all-queries.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { ToastrModule } from 'ngx-toastr';
+import { PaymentPaytmComponent } from './customer/payment-paytm/payment-paytm.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +56,10 @@ import { AllServiceRequestComponent } from './admin-pannel/admin-content/all-ser
     AllServiceProviderComponent,
     AllCustomerComponent,
     AllServiceRequestComponent,
+    FeedbackComponent,
+    AllQueriesComponent,
+    PaymentPaytmComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -61,6 +69,14 @@ import { AllServiceRequestComponent } from './admin-pannel/admin-content/all-ser
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
+    ToastrModule.forRoot(
+      {
+      positionClass:'toast-top-center',
+      closeButton: true,
+      
+      }
+      )
   ],
   providers: [],
   bootstrap: [AppComponent]

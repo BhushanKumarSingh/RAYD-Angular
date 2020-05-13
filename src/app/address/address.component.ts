@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup,FormControl } from "@angular/forms";
+import { FormGroup,FormControl, Validators } from "@angular/forms";
 import { RaydService } from "../rayd.service";
 
 @Component({
@@ -9,12 +9,12 @@ import { RaydService } from "../rayd.service";
 })
 export class AddressComponent implements OnInit {
   addressForm = new FormGroup({
-    locality:new FormControl(''),
-    city:new FormControl(''),
-    address:new FormControl(''),
-    landmark:new FormControl(''),
-    state:new FormControl(''),
-    pinCode:new FormControl(''),
+    locality:new FormControl('',Validators.required),
+    city:new FormControl('',Validators.required),
+    address:new FormControl('',Validators.required),
+    landmark:new FormControl('',Validators.required),
+    state:new FormControl('',Validators.required),
+    pinCode:new FormControl('',Validators.required),
     addressType:new FormControl('')
 
   })

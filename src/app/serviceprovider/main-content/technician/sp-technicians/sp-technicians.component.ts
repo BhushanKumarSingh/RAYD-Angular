@@ -8,12 +8,13 @@ import { RaydService } from 'src/app/rayd.service';
   styleUrls: ['./sp-technicians.component.css']
 })
 export class SpTechniciansComponent implements OnInit {
+  id:number = this.raydService.serviceData.serviceProviderId;
   spObj:any;
   serviceProviderTechie:any;
-  constructor(private spService:ServiceproviderService,private raydService:RaydService) { }
+  constructor(private raydService:RaydService,private spService:ServiceproviderService) { }
 
   ngOnInit() {
-    let response = this.spService.getTechnicianData(this.raydService.serviceData.serviceProviderId);
+    let response = this.spService.getTechnicianData(this.id);
       response.subscribe((data)=>{
         this.spObj = data;
         console.log(this.spObj);

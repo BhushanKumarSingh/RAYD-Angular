@@ -7,26 +7,30 @@ import { Router } from '@angular/router';
 import { AddProblem } from './add-problem';
 import { VisitingDetails } from './visiting-details';
 import { OrderDetails } from './order-details';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RaydService {
 
-  constructor(private http: HttpClient,private router:Router) { 
+  constructor(private toastr: ToastrService,private http: HttpClient,private router:Router) { 
     console.log(router.url) 
   }
   flagForCustomer = false;
   flagForServiceProvider = true;
+  requestId;
 
 
+  /* Base url */
   url = "http://localhost:8080/";
+  /* Object of  SignUpDetails class*/
   signUpDetails = new SignUpDetails();
 
 
 
 
-
+/* This function for Customer registration */
   signUp() {
     var URL = this.url+'signUp'
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.signUpDetails.getEmailId + ':' + this.signUpDetails.getPassword) });
@@ -34,7 +38,7 @@ export class RaydService {
       (result) => {
         console.log(result)
         alert("register")
-        this.router.navigate(['loginpage']);
+        this.router.navigate(['customerLogin']);
       },
       err => {
         alert("Something wrong with server please try later")
@@ -43,41 +47,45 @@ export class RaydService {
     )
     this.flagForCustomer = false;
   }
+
+  /* this function is for customer login */
   loginDetails = new LoginDetails();
   userData;
-
-  customerLogin() {
+  async customerLogin() {
     var URL = this.url+'signIn'
 
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.loginDetails.getEmailId + ':' + this.loginDetails.getPassword) });
     this.http.post(URL, this.loginDetails, { headers, responseType: 'text' }).subscribe(
       (result) => {
         this.userData = JSON.parse(result); 
-        alert("login")
+        //console.log((sessionStorage.getItem("userId")).userId);
+        sessionStorage.setItem("userId", this.userData.userId);
+        this.toastr.success("Login successfully",'Success')
         this.router.navigate(['userDashboard']);
         
       },
       err => {
-        alert("Something wrong with password or username")
+        this.toastr.error("Something wrong with username and password",'Error')
       }
     )
   }
+  /* This function is for admin login */
   adminLogin(){
     var URL = this.url+'adminLogin'
 
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.loginDetails.getEmailId + ':' + this.loginDetails.getPassword) });
     this.http.post(URL, this.loginDetails, { headers, responseType: 'text'}).subscribe(
       (result) => { 
-        alert("login")
-        
+        this.toastr.success("Login successfully",'Success')
         this.router.navigate(['admin']);
       },
       err => {
-        alert("Something wrong with password or username")
+        this.toastr.error("Something wrong with username and password",'Error')
       }
     )
 
   }
+  /* This function is for service provider login */
   serviceData;
   serviceProviderLogin(){
     var URL = this.url+'serviceProviderLogin'
@@ -86,64 +94,56 @@ export class RaydService {
     this.http.post(URL, this.loginDetails, { headers, responseType: 'text' }).subscribe(
       (result) => {
         this.serviceData = JSON.parse(result); 
-        alert("login")
+        this.toastr.success("Login successfully",'Success')
         this.router.navigate(['serviceProvider']);
         
       },
       err => {
-        alert("Something wrong with password or username")
+        this.toastr.error("Something wrong with username and password",'Error')
       }
     )
     
 
   }
+  /* This function is registration for service provider*/
   serviceProvider=new ServiceProvider();
   signUpForServiceProvider(){
     var URL = this.url+'serviceProviderRequest'
-
-  //  const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.serviceProvider.getEmailId + ':' + this.serviceProvider.getPassword) });
     this.http.post(URL, this.serviceProvider, { responseType: 'text' as 'json' }).subscribe(
       (result) => {
         console.log(result)
-        alert("request registerd")
-        this.router.navigate(['loginpage']);
+        this.toastr.success("Request registerd successfully",'Success')
+        this.router.navigate(['ServiceProviderLogin']);
       },
       err => {
-        alert("Something wrong")
-
+        this.toastr.error("Something wrong",'Error')
       }
     )
     
   }
+  /* This function get all the address of a particular user/customer */
   addressResult;
   async  getAddress(){
     var URL = this.url+'getAddress?userId='+this.userData.userId;
-    // await this.http.get(this.url).subscribe(
-    //   (result)=>{
-    //     this.addressResult=result;
-    //     console.log(this.addressResult)
-    //   }
-    // )
     this.addressResult=await this.http.get(URL).toPromise();
   }
 
+  /* This function is to request a problem */
   addProblem=new AddProblem();
   addProblemRequset(){
     var URL = this.url+'addProblem'
-
-    //  const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.serviceProvider.getEmailId + ':' + this.serviceProvider.getPassword) });
       this.http.post(URL, this.addProblem, { responseType: 'text' as 'json' }).subscribe(
         (result) => {
           console.log(result)
-          alert("request registerd")
+          this.toastr.success("Request registerd successfully",'Success')
         },
         err => {
-          alert("Something wrong")
-  
+          this.toastr.error("Something wrong",'Error')
         }
       )
     
   }
+  /* This function is to get all requested problem */
   problemRequested;
   async  getRequest(){
     var URL = this.url+'getProblem?userId='+this.userData.userId;
@@ -151,121 +151,128 @@ export class RaydService {
     this.problemRequested=await this.http.get(URL).toPromise();
     console.log(this.problemRequested)
   }
+  /* This function get all the details of request which is not accepted */
   openRequest;
   async getOpenRequest(){
     var URL = this.url+'openRequest';
     this.openRequest=await this.http.get(URL).toPromise();
   }
-  acceptRequest(requestData){
-    var URL = this.url+'assignServiceProvider'
 
-    //  const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.serviceProvider.getEmailId + ':' + this.serviceProvider.getPassword) });
+  /* This function update the status if someone is accept the request */
+  async acceptRequest(requestData){
+    var URL = this.url+'assignServiceProvider'
       this.http.post(URL, requestData, { responseType: 'text' as 'json' }).subscribe(
         (result) => {
           console.log(result)
-          alert("Accepted")
+          this.toastr.success("Accepted successfully",'Success')
         },
         err => {
-          alert("Already Accepted")
-  
+          this.toastr.warning("Already Accepted", 'Warning');
         }
       )
   }
+  /* This function is for get all the accepted request for a particular service provider */
   servicesProblem;
   async getAcctedService(){
     var URL = this.url+'getServices?serviceProviderId='+this.serviceData.serviceProviderId;
     this.servicesProblem= await this.http.get(URL).toPromise();
     console.log(this.servicesProblem);
   }
+  /* This function save the visiting details */
   visitingDetails=new VisitingDetails();
   async saveStatus(){
     var URL = this.url+'visitingDetails'
-
-    //  const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.serviceProvider.getEmailId + ':' + this.serviceProvider.getPassword) });
       this.http.post(URL, this.visitingDetails, { responseType: 'text' as 'json' }).subscribe(
         (result) => {
           console.log(result)
-          alert("Review added")
+          this.toastr.success("Review Added",'Success')
         },
         err => {
-          alert("something worong")
+          this.toastr.error("Something wrong",'Error')
   
         }
       )
 
   }
-   orderDetails=new OrderDetails();
+  /* This function is save parts details if request is completed */
+   orderDetails=[];
    async saveOrderDetails(){
     var URL = this.url+'orderDetails'
-    //  const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.serviceProvider.getEmailId + ':' + this.serviceProvider.getPassword) });
       this.http.post(URL, this.orderDetails, { responseType: 'text' as 'json' }).subscribe(
         (result) => {
           console.log(result)
-          alert("Parts added")
+          this.toastr.success("Parts Added",'Success')
         },
         err => {
-          alert("something worong")
+          this.toastr.error("Something wrong",'Error')
   
         }
       )
   }
+  /* This function is to get all new registration of service provider */
   verifyServiceRequestDetails;
   async verifyServiceRequest(){
     var URL = this.url+'varify';
     this.verifyServiceRequestDetails=await this.http.get(URL).toPromise();
 
   }
+  /* Send password to newly Registerd service provider  */
  async sendLoginPassword(serviceProvider){
     var URL = this.url+'sendPassword'
       this.http.post(URL, serviceProvider, { responseType: 'text' as 'json' }).subscribe(
         (result) => {
           console.log(result)
-          alert("password send")
+          this.toastr.success("Password send",'Success')
         },
         err => {
-          alert("something wrong")
+          this.toastr.error("Something wrong",'Error')
   
         }
       )
 
   }
+  /* This function get all the visiting message for a particular user */
   vistingMessage;
   async getVistingDetails(){
     var URL = this.url+'review?userId='+this.userData.userId;
     this.vistingMessage=await this.http.get(URL).toPromise();
     console.log(this.vistingMessage)
   }
+  /* This function get sum of all type of request for draw chart */
   requestType;
   async getrequestType(){
     var URL=this.url+'countType';
     this.requestType=await this.http.get(URL).toPromise();
     console.log(this.requestType[0]);
   }
+  /* This function get sum of all type of request for a particular user to draw chart */
   requestTypeOfAUser;
   async getrequestTypeOfUser(){
     var URL=this.url+'countTypeOfAUser?userId='+this.userData.userId;
     this.requestTypeOfAUser=await this.http.get(URL).toPromise();
   }
+  /* This function get the request which has completed but payment is not done */
   paymentData;
   async getNotCompletedPayment(){
     var URL=this.url+'getPaymentStatus?userId='+this.userData.userId;
     this.paymentData=await this.http.get(URL).toPromise();
   }
+  /* This function is for change the password */
   changePassword(data){
     var URL = this.url+'changePassword'
     this.http.post(URL, data, { responseType: 'text' as 'json' }).subscribe(
       (result) => {
         console.log(result)
-        alert("password change succsessful")
+        this.toastr.success("password change succsessful",'Success')
         this.router.navigate(['customerLogin']);
       },
       err => {
-        alert("something wrong")
-
+        this.toastr.error("Something wrong",'Error')
       }
     )
 
   }
+  /* This function is to get all service provider */
   allServiceProvider;
  async getAllServiceProvider(){
     var URL=this.url+'allServiceProvder';
@@ -273,6 +280,7 @@ export class RaydService {
     console.log(this.allServiceProvider);
 
   }
+  /* This function is to get all Customer */
   allCustomer;
   async getAllCustomer(){
     var URL=this.url+'allCustomer';
@@ -280,11 +288,20 @@ export class RaydService {
     console.log(this.allCustomer);
 
   }
+  /* This function is to get invoice details for a particular request */
   invoiceDetails;
   async getInvoiceDetails(){
-    var URL=this.url+'getInvoice?serviceRequestId=15';
+    var URL=this.url+'getInvoice?serviceRequestId='+this.requestId;
     this.invoiceDetails=await this.http.get(URL).toPromise();
     console.log(this.invoiceDetails);
+  }
+
+  portfolioDetails1;
+  async getServiceRequestDetails(){
+    var URL=this.url+'getPortfolioDetails?userId='+this.userData.userId;
+    this.portfolioDetails1=await this.http.get(URL).toPromise();
+    console.log(this.portfolioDetails1);
+
   }
 
 

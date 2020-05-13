@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RaydService } from '../rayd.service';
 
 @Component({
@@ -11,10 +11,10 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(private raydService:RaydService) { }
   changePasswordForm=new FormGroup({
-    emailId:new FormControl(''),
-    currentPassword:new FormControl(''),
-    newPassword:new FormControl(''),
-    confirmPassword:new FormControl('')
+    emailId:new FormControl('',Validators.required),
+    currentPassword:new FormControl('',Validators.required),
+    newPassword:new FormControl('',Validators.required),
+    confirmPassword:new FormControl('',Validators.required)
   })
 
   ngOnInit() {
