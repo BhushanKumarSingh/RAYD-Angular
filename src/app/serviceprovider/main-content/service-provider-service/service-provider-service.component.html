@@ -123,7 +123,9 @@
           <div class="form-group">
             <label for="exampleFormControlSelect1">Select Status</label>
             <select class="form-control" id="exampleFormControlSelect1" (click)="visit()"  formControlName="status">
+              <option value="technician">Assign Technician</option>
               <option value="visit">Visted</option>
+              <option value="reVisit">Re-Visit</option>
               <option value="complete">Completed</option>
             </select>
           </div>
@@ -181,6 +183,33 @@
             </div>
           </div>
 
+          <div *ngIf="technician" class="card" style="border: white;">
+            <div class="card-header addressType" >
+              Choose Technician
+             </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Select Technician</label>
+                <select class="form-control" formControlName="tech">
+                  <option  *ngFor="let i of serviceProviderProfile.technician;let j = index" value="{{i.technicianId}}">
+                    {{i.firstName}}
+                  </option>
+                 
+                </select>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="reVisit" class="card" style="border: white;">
+            <div class="card-header addressType" >
+              Re-visiting Details
+             </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">Review Message</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="revisitingMessage"></textarea>
+              </div>
+            </div>
+          </div>
           </form>
       </div>
       <div class="modal-footer">

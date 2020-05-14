@@ -6,6 +6,7 @@ import { RaydService } from 'src/app/rayd.service';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-customer-invoice',
@@ -27,7 +28,7 @@ export class CustomerInvoiceComponent implements OnInit {
 
 myDate = new Date();
 date;
-  constructor(private spinerService:NgxSpinnerService,private raydService : RaydService,private datePipe: DatePipe,private router:Router) { 
+  constructor(private toastr:ToastrService,private spinerService:NgxSpinnerService,private raydService : RaydService,private datePipe: DatePipe,private router:Router) { 
     this.date = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
   invoiceDetails=[]
@@ -61,7 +62,8 @@ date;
       var position = 0;
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
       pdf.save('File.pdf');
-      alert("Downloaded")
+      alert("")
+      this.toastr.success("Downloaded.",'Success')
       // this.spinerService.hide();
       this.router.navigate(["feedback"]);
       

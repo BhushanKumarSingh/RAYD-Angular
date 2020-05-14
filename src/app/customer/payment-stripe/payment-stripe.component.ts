@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RaydService } from 'src/app/rayd.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-payment-stripe',
@@ -16,11 +17,12 @@ import { RaydService } from 'src/app/rayd.service';
 
 export class PaymentStripeComponent implements OnInit {
   srId : number;
+  
   grandTotal : number;
   paymentObject : any;
    
   private paymentObj : Payment = new Payment();
-  constructor(private raydService:RaydService,private customerService : AppService, private router:Router,  private zone:NgZone, private SpinnerService: NgxSpinnerService) { }
+  constructor(private toastr:ToastrService,private raydService:RaydService,private customerService : AppService, private router:Router,  private zone:NgZone, private SpinnerService: NgxSpinnerService) { }
 
 
   paymentForm = new FormGroup({
@@ -34,10 +36,16 @@ export class PaymentStripeComponent implements OnInit {
   serviceCharge=0;
   subTotal=0;
   taxAmount=0;
+  sr:number;
   async ngOnInit() {
+    console.log(sessionStorage.getItem('requestId'));
+    var s=sessionStorage.getItem('requestId');
+    this.srId=+s;
+    this.sr=+s;
     this.SpinnerService.show()
     this.srId=this.raydService.requestId;
-    console.log(this.srId)
+    
+    console.log(this.sr)
 
     await this.raydService.getInvoiceDetails();
       for(var i in this.raydService.invoiceDetails) {
@@ -71,15 +79,16 @@ export class PaymentStripeComponent implements OnInit {
           let grandTotal = this.paymentObject.amount/100;
           let status = this.paymentObject.paid;
           console.log(grandTotal+'@@@@@@@@@@@'+transactionId)
+          console.log(this.srId+"--------");
 
-          let paymentObj1: PaymentStatus = new PaymentStatus(this.srId, transactionId, grandTotal, status);
+          let paymentObj1: PaymentStatus = new PaymentStatus(this.sr, transactionId, grandTotal, status);
           this.customerService.savePaymentStatus(paymentObj1);
           this.SpinnerService.hide();
-          alert("Your transaction is successful.");
+          this.toastr.success("Your transaction is successful.",'Success')
           this.zone.run(() => this.router.navigate(['repairinvoice']));
        });
       } else {
-        this.SpinnerService.hide();
+        
         alert(response.error.message);
       }
     });

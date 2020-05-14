@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from "../app.component";
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { RaydService } from '../rayd.service';
 import { Chart } from "chart.js";
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -11,26 +12,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-dashboard.component.css']
 })
 export class UserDashboardComponent implements OnInit {
-  addProblemForm=new FormGroup({
-    productName:new FormControl('',Validators.required),
-    productType:new FormControl('',Validators.required),
-    modelNumber:new FormControl('',Validators.required),
-    description:new FormControl('',Validators.required),
-    companyName:new FormControl('',Validators.required)
+ 
+  addProblemForm : FormGroup;
+addressForm : FormGroup;
 
-  })
-  addressForm = new FormGroup({
-    locality:new FormControl('',Validators.required),
-    city:new FormControl('',Validators.required),
-    address:new FormControl('',Validators.required),
-    landmark:new FormControl('',Validators.required),
-    state:new FormControl('',Validators.required),
-    pinCode:new FormControl('',Validators.required),
-    addressType:new FormControl('',Validators.required)
-
-  })
-
-  constructor(private raydService:RaydService,private router:Router) { }
+  constructor(private formBuilder:FormBuilder,private toastr: ToastrService,private raydService:RaydService,private router:Router) {
+    this.addProblemForm = this.formBuilder.group({
+      productName: ['', Validators.required],
+      productType: ['', Validators.required],
+      modelNumber: ['', Validators.required],
+      description : ['', Validators.required],
+      companyName : ['', Validators.required],
+      });
+      this.addressForm = this.formBuilder.group({
+        locality: ['', Validators.required],
+        city: ['', Validators.required],
+        address: ['', Validators.required],
+        landmark: ['', Validators.required],
+        state : ['', Validators.required],
+        pinCode : ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{6}$")]],
+        addressType : ['', Validators.required]
+        });
+   }
   addressData;
   notification;
   userName;
@@ -41,6 +44,10 @@ export class UserDashboardComponent implements OnInit {
   paymentData;
   public now: Date = new Date();
  async ngOnInit() {
+   if((sessionStorage.getItem("userId"))==null){
+    this.toastr.warning("Please Login first", 'Warning');
+      this.router.navigate(["/"]);
+   }
   this.now = new Date();
     this.notification=1;
     this.raydService.getRequest();
@@ -120,7 +127,7 @@ export class UserDashboardComponent implements OnInit {
     this.raydService.addProblem.setModelNumber=this.addProblemForm.get('modelNumber').value;
     this.raydService.addProblem.setDescription=this.addProblemForm.get('description').value;
     this.raydService.addProblem.setCompanyName=this.addProblemForm.get('companyName').value;
-    this.raydService.addProblem.setUserId=this.raydService.userData.userId;
+    this.raydService.addProblem.setUserId=(sessionStorage.getItem("userId"));
 }
 address(){
   this.addressData=this.raydService.addressResult;
@@ -205,8 +212,15 @@ checkPortfolio(){
 
  }
  setRequestId(requestId){
-  this.raydService.requestId=requestId;
+  // this.raydService.requestId=requestId;
+  sessionStorage.setItem("requestId", requestId);
+  console.log(sessionStorage.getItem('requestId')+"''''''''''''")
   this.router.navigate(["paystripe"]);
+ }
+ async setRequestIdForPaytm(requestId){
+  sessionStorage.setItem("requestId", requestId);
+  await this.raydService.getInvoiceDetails();
+  this.router.navigate(["payPaytm"]);
  }
 
  view=true;
@@ -224,7 +238,7 @@ checkPortfolio(){
    console.log(this.potfolioDetails1)
  }
  getInvoice(requestId){
-  this.raydService.requestId=requestId;
+  this.raydService.requestId=(sessionStorage.getItem("requestId"));
   this.router.navigate(["repairinvoice"]);
  }
  
@@ -238,12 +252,22 @@ checkPortfolio(){
  request;
  j;
  serviceRequest=false;
- requestDetails(data,i){
+ techData;
+ async requestDetails(data,i){
     this.request=data;
     this.j=i;
+    if(data.technicianId!=0){
+    await this.raydService.getTechnicianDetails(data.technicianId);
+    this.techData=this.raydService.tecnicianDetails;
+    }
+    else
+    this.techData=null;
     this.serviceRequest=true;
  }
-
+ logOut(){
+  sessionStorage.removeItem("userId");
+  this.router.navigate(["/"]);
+ }
 
 
 }

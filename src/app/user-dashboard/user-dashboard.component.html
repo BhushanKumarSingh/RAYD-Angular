@@ -54,7 +54,15 @@
             <p style="float: right;color: green;font-weight: bolder;">Completed</p>
           </div>
           <div class="row">
-            <a class="btn btn-outline-success" style="float: right;" (click)="setRequestId(data.serviceRequestId)">Pay Now</a>
+            <!-- <a class="btn btn-outline-success" style="float: right;" (click)="setRequestId(data.serviceRequestId)">Pay Now</a> -->
+            <button style="margin-right: 80px;" class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Pay Now
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" id="stripe" (click)="setRequestId(data.serviceRequestId)" routerLinkActive="active">Pay Using Stripe</a>
+              <a class="dropdown-item" id="paytm" (click)="setRequestIdForPaytm(data.serviceRequestId)" routerLinkActive="active">Pay Using Paytm</a>
+              
+            </div>
           </div>
         </div>
       </div>
@@ -157,110 +165,101 @@
         </div>
     </div>  
     </div>  
-    <!-- <div *ngFor="let data of portfolioData ;let i=index" style="width:95%;">
-            
-      <div class="card-header row">
-        <div class="col-md-10 addressType">
-          {{data.productType}}
-          </div>
-          <div class="col-md-2">
-            <div class="row">
-              <h6 style="float: right;">Date</h6>
-            </div>
-            <div class="row">
-              {{data.localDate}}
-            </div>
-          </div>
-      </div>
-        <div class="card-body" style="width: 100%;">
-          <h5 class="card-title">{{data.productName}} {{data.companyName}} {{data.modelNumber}}</h5>
-          <p class="card-text">{{data.description}}</p>
-          <p *ngIf="open(data.status)" class="status1">Open</p>
-          <p *ngIf="accepted(data.status)" class="status2">Accepeted</p>
-          <p *ngIf="completed(data.status)" class="status3">Completed</p>
-          <p *ngIf="visited(data.status)" class="status4">Visited</p>
-        </div>
-      
-
-
-    </div> -->
+    
 </div>
 
-<div class="modal fade bd-example-modal-lg modal-dialog-scrollable " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<form [formGroup]="addProblemForm">
+  <div class="modal fade bd-example-modal-lg modal-dialog-scrollable " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Glad to help you!!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <form [formGroup]="addProblemForm">
-          <div class="row">
-            <div class="col-md">
-              <div class="form-group">
-                <label>Product Name<sup>*</sup></label>
-                <input type="text" class="form-control" placeholder="TV,Fan,Bed..." formControlName="productName">
-              </div>
- 
-            </div>
-            <div class="col-md">
-              <div class="form-group">
-                <label for="exampleFormControlSelect1">Product Type<sup>*</sup></label>
-                <select class="form-control" id="exampleFormControlSelect1" formControlName="productType">
-                  <option>Electronics</option>
-                  <option>Plumbing</option>
-                  <option>Furniture</option>
-                  <option>Mechanic</option>
-                </select>
-              </div>
- 
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md">
-              <div class="form-group">
-                <label>Company Name<sup>*</sup></label>
-                <input type="text" class="form-control" placeholder="Enter company name" formControlName="companyName">
-              </div>
-              
- 
-            </div>
-            <div class="col-md">
-               <div class="form-group">
-                <label>Model Number<sup>*</sup></label>
-                <input type="text" class="form-control" placeholder="Enter model number" formControlName="modelNumber">
-              </div>
- 
-            </div>
-
-          </div>
-          <div class="row">
-            <div class="col-md">
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Description<sup>*</sup></label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Brief about your problem" formControlName="description"></textarea>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="form-group">
-            <label for="exampleFormControlFile1">Product Image</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1">
-          </div> -->
-        </form>
-      </div>
-    </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button href="#selectAddress" data-toggle="modal" data-dismiss="modal" class="btn btn-info" (click)="address();addProblemData();" [disabled]="!addProblemForm.valid">Next</button>
-
-      
-    </div>
+  <div class="modal-content">
+  <div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLongTitle">Glad to help you!!</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+  </button>
   </div>
-</div>  
-</div>
+  <div class="modal-body">
+  <div class="container-fluid">
+  
+  <div class="row">
+  <div class="col-md">
+  <div class="form-group">
+  <label>Product Name<sup>*</sup></label>
+  <input type="text" class="form-control" placeholder="TV,Fan,Bed..." formControlName="productName" >
+  <div *ngIf="addProblemForm.controls['productName'].invalid && (addProblemForm.controls['productName'].dirty || addProblemForm.controls['productName'].touched)" class="alert alert-warning">
+  <div *ngIf="addProblemForm.controls['productName'].errors.required">product Type is required</div>
+  </div>
+  </div>
+  
+  </div>
+  <div class="col-md">
+  <div class="form-group">
+  <label for="exampleFormControlSelect1">Product Type<sup>*</sup></label>
+  <select class="form-control" id="exampleFormControlSelect1" formControlName="productType">
+  <option>Electronics</option>
+  <option>Plumbing</option>
+  <option>Furniture</option>
+  <option>Mechanic</option>
+  </select>
+  <div *ngIf="addProblemForm.controls['productType'].invalid && (addProblemForm.controls['productType'].dirty || addProblemForm.controls['productType'].touched)" class="alert alert-warning">
+  <div *ngIf="addProblemForm.controls['productType'].errors.required">product Type is required</div>
+  </div>
+  </div>
+  
+  </div>
+  </div>
+  <div class="row">
+  <div class="col-md">
+  <div class="form-group">
+  <label>Company Name<sup>*</sup></label>
+  <input type="text" class="form-control" placeholder="Enter company name" formControlName="companyName">
+  <div *ngIf="addProblemForm.controls['companyName'].invalid && (addProblemForm.controls['companyName'].dirty || addProblemForm.controls['companyName'].touched)" class="alert alert-warning">
+  <div *ngIf="addProblemForm.controls['companyName'].errors.required">company Name is required</div>
+  </div>
+  </div>
+  
+  
+  </div>
+  <div class="col-md">
+  <div class="form-group">
+  <label>Model Number<sup>*</sup></label>
+  <input type="text" class="form-control" placeholder="Enter model number" formControlName="modelNumber">
+  <div *ngIf="addProblemForm.controls['modelNumber'].invalid && (addProblemForm.controls['modelNumber'].dirty || addProblemForm.controls['modelNumber'].touched)" class="alert alert-warning">
+  <div *ngIf="addProblemForm.controls['modelNumber'].errors.required">Model Number is required</div>
+  </div>
+  </div>
+  
+  </div>
+  
+  </div>
+  <div class="row">
+  <div class="col-md">
+  <div class="form-group">
+  <label for="exampleFormControlTextarea1">Description<sup>*</sup></label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Brief about your problem" formControlName="description" ></textarea>
+  <div *ngIf="addProblemForm.controls['description'].invalid && (addProblemForm.controls['description'].dirty || addProblemForm.controls['description'].touched)" class="alert alert-warning">
+  <div *ngIf="addProblemForm.controls['description'].errors.required">Product Description is required</div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <!-- <div class="form-group">
+  <label for="exampleFormControlFile1">Product Image</label>
+  <input type="file" class="form-control-file" id="exampleFormControlFile1">
+  </div> -->
+  
+  </div>
+  </div>
+  <div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <button type="submit" href="#selectAddress" data-toggle="modal" data-dismiss="modal" class="btn btn-info" [disabled]="!addProblemForm.valid" (click)="address();addProblemData();" >Next</button>
+  
+  
+  </div>
+  </div>
+  </div>
+  </div>
+  </form>
 
 
 <div class="modal fade bd-example-modal-lg modal-dialog-scrollable " id="selectAddress" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -300,88 +299,110 @@
 </div>
 
 <div class="modal fade bd-example-modal-lg modal-dialog-scrollable " id="addressModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <form class="address-form" [formGroup]="addressForm">
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Glad to help you!!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        
-      </div>
-      <h3>Address</h3>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <form class="address-form" [formGroup]="addressForm">
-            <div class="text-center">
-            <img src="../../assets/img/address2.svg" class="addImg">
-            <h2 class="title"><b>Manage Address</b></h2>
-            <p class="user-notification">This page will help RAYD know about you.</p>
-            </div>
-            
-            <div class="form-row">
-            <div class="form-group col-md-6">
-            <label for="inputLocality" id="inputField"><b>Locality<sup>*</sup></b></label>
-            <input type="text" class="form-control" id="inputLocality" placeholder="1234 Main bazar.." formControlName="locality">
-            </div>
-            <div class="form-group col-md-6">
-            <label for="inputCity" id="inputField"><b>City/District/Town<sup>*</sup></b></label>
-            <input type="text" class="form-control" id="inputCity" formControlName="city">
-            </div>
-            
-            
-            <div class="form-group col-md-12">
-            <label for="address" id="inputField"><b>Address(Area & Street)<sup>*</sup></b></label>
-            <textarea class="form-control" id="inputAddress" rows="3" formControlName="address" ></textarea>
-            </div>
-            </div>
-            <div class="form-row">
-            <div class="form-group col-md-6">
-            <label for="inputLandmark" id="inputField"><b>Landmark(Optional)</b></label>
-            <input type="text" class="form-control" id="inputLandmark" formControlName="landmark">
-            </div>
-            
-            <div class="form-group col-md-4">
-            <label for="inputState" id="inputField"><b>State<sup>*</sup></b></label>
-            <select id="inputState" class="form-control" formControlName="state">
-              <option selected>Odisha</option>
-              <option selected>Jharkhand</option>
-              <option selected>Bihar</option>
-              <option selected>Chhattisgarh</option>
-              <option selected>Madhya Pradesh</option>
-            </select>
-            </div>
-            <div class="form-group col-md-2">
-            <label for="inputZip" id="inputField"><b>PinCode<sup>*</sup></b></label>
-            <input type="number" class="form-control" id="inputZip" formControlName="pinCode">
-            </div>
-            </div>
-            <div class="text-left">
-            <label for="addressType" id="inputField"><b>Address Type<sup>*</sup></b></label><br>
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="addressType" id="inlineRadio1" value="option1" formControlName="addressType">&nbsp;&nbsp;
-            <label class="form-check-label" for="inlineRadio1">Home</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">&nbsp;&nbsp;
-            <label class="form-check-label" for="inlineRadio2">Work</label>
-            </div>
-            </div>
-            <br>
-           
-            </form> 
-      </div>
-    </div>
-      <div class="modal-footer">
-       
-        <a href="#exampleModalCenter" data-toggle="modal" data-dismiss="modal" class="btn btn-info">Previous</a>
-        <button data-toggle="modal" data-dismiss="modal" class="btn btn-success" (click)="addNewAddress()" [disabled]="!addressForm.valid">Save</button>
-
-      </div>
-   
+  <div class="modal-content">
+  <div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLongTitle">Glad to help you!!</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+  </button>
+  
   </div>
-</div>  
-</div>
+  <h3>Address</h3>
+  
+  <div class="modal-body">
+  <div class="container-fluid">
+  
+  <div class="text-center">
+  <img src="../../assets/img/address2.svg" class="addImg">
+  <h2 class="title"><b>Manage Address</b></h2>
+  <p class="user-notification">This page will help RAYD know about you.</p>
+  </div>
+  
+  <div class="form-row">
+  <div class="form-group col-md-6">
+  <label for="inputLocality" id="inputField"><b>Locality<sup>*</sup></b></label>
+  <input type="text" class="form-control" id="inputLocality" placeholder="1234 Main bazar.." formControlName="locality">
+  <div *ngIf="addressForm.controls['locality'].invalid && (addressForm.controls['locality'].dirty || addressForm.controls['locality'].touched)" class="alert alert-warning">
+  <div *ngIf="addressForm.controls['locality'].errors.required">This Field is required</div>
+  </div>
+  </div>
+  <div class="form-group col-md-6">
+  <label for="inputCity" id="inputField"><b>City/District/Town<sup>*</sup></b></label>
+  <input type="text" class="form-control" id="inputCity" formControlName="city">
+  <div *ngIf="addressForm.controls['city'].invalid && (addressForm.controls['city'].dirty || addressForm.controls['city'].touched)" class="alert alert-warning">
+  <div *ngIf="addressForm.controls['city'].errors.required">This Field is required</div>
+  </div>
+  </div>
+  
+  
+  <div class="form-group col-md-12">
+  <label for="address" id="inputField"><b>Address(Area & Street)<sup>*</sup></b></label>
+  <textarea class="form-control" id="inputAddress" rows="3" formControlName="address" ></textarea>
+  <div *ngIf="addressForm.controls['address'].invalid && (addressForm.controls['address'].dirty || addressForm.controls['address'].touched)" class="alert alert-warning">
+  <div *ngIf="addressForm.controls['address'].errors.required">This Field is required</div>
+  </div>
+  </div>
+  </div>
+  <div class="form-row">
+  <div class="form-group col-md-6">
+  <label for="inputLandmark" id="inputField"><b>Landmark(Optional)</b></label>
+  <input type="text" class="form-control" id="inputLandmark" formControlName="landmark">
+  <div *ngIf="addressForm.controls['landmark'].invalid && (addressForm.controls['landmark'].dirty || addressForm.controls['landmark'].touched)" class="alert alert-warning">
+  <div *ngIf="addressForm.controls['landmark'].errors.required">This Field is required</div>
+  </div>
+  </div>
+  
+  <div class="form-group col-md-4">
+  <label for="inputState" id="inputField"><b>State<sup>*</sup></b></label>
+  <select id="inputState" class="form-control" formControlName="state">
+  <option selected>Odisha</option>
+  <option selected>Jharkhand</option>
+  <option selected>Bihar</option>
+  <option selected>Chhattisgarh</option>
+  <option selected>Madhya Pradesh</option>
+  </select>
+  <div *ngIf="addressForm.controls['state'].invalid && (addressForm.controls['state'].dirty || addressForm.controls['state'].touched)" class="alert alert-warning">
+  <div *ngIf="addressForm.controls['state'].errors.required">This Field is required</div>
+  </div>
+  </div>
+  <div class="form-group col-md-2">
+  <label for="inputZip" id="inputField"><b>PinCode<sup>*</sup></b></label>
+  <input type="number" class="form-control" id="inputZip" formControlName="pinCode">
+  <div *ngIf="addressForm.controls['pinCode'].invalid && (addressForm.controls['pinCode'].dirty || addressForm.controls['pinCode'].touched)" class="alert alert-warning">
+  <div *ngIf="addressForm.controls['pinCode'].errors.required">This Field is required</div>
+  <div *ngIf="addressForm.controls['pinCode'].errors.pattern">pinCode must be 6 Digits</div>
+  </div>
+  </div>
+  </div>
+  <div class="text-left">
+  <label for="addressType" id="inputField"><b>Address Type<sup>*</sup></b></label><br>
+  <div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="addressType" id="inlineRadio1" value="option1" formControlName="addressType">&nbsp;&nbsp;
+  <label class="form-check-label" for="inlineRadio1">Home</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
+  <div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">&nbsp;&nbsp;
+  <label class="form-check-label" for="inlineRadio2">Work</label>
+  </div>
+  </div>
+  <br>
+  
+  
+  </div>
+  </div>
+  <div class="modal-footer">
+  
+  <a href="#exampleModalCenter" data-toggle="modal" data-dismiss="modal" class="btn btn-info">Previous</a>
+  <button data-toggle="modal" data-dismiss="modal" class="btn btn-success" (click)="addNewAddress()" [disabled]="!addressForm.valid">Save</button>
+  
+  </div>
+  
+  </div>
+  </div>
+  </form>
+  </div>
 
 
 <!-- To change the direction of the modal animation change .right class -->
@@ -409,7 +430,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" routerLink="/">Log Out</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="logOut()">Log Out</button>
       </div>
     </div>
   </div>
@@ -540,65 +561,11 @@
 
 <div *ngIf=!view class="container">
   <h3>Portfolio Details</h3>
-<!-- <div style="border: 1px solid white;" *ngFor="let data of portfolioData;index as i">
-  
-  <div class="row request" >
-    <div class="col-sm-6 portfolioPadding">
-      <div class="card" style="border: white;">
-        <div class="card-header row">
-          <div class="col-md-10 addressType">
-            Service Request
-            </div>
-            <div class="col-md-2">
-              <div class="row">
-                <h6 style="float: right;">Date</h6>
-              </div>
-              <div class="row">
-                {{potfolioDetails1[i][12]}}
-              </div>
-            </div>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">{{potfolioDetails1[i][2]}}</h5>
-          <h6 class="card-title">{{potfolioDetails1[i][1]}} {{potfolioDetails1[i][5]}}</h6>
-          <p class="card-text">{{potfolioDetails1[i][3]}}</p>
-
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 portfolioPadding">
-      <div class="card" style="border: white;">
-        <div class="row card-header addressType">
-          <div class="col-md-8">
-            Address
-          </div>
-          <div *ngIf="data.status=='COMPLETED' && data.payment.paymentStatus=='COMPLETED'" class="col-md-4">
-            <button type="button" class="btn btn-outline-success" (click)="getInvoice(data.serviceRequestId)">Get Invoice Details</button>
-          </div>
-         </div>
-        <div class="card-body">
-          <p class="card-text">{{potfolioDetails1[i][9]}}</p>
-          <p>{{potfolioDetails1[i][8]?.split(',')[1]}} {{potfolioDetails1[i][8]?.split(',')[0]}}</p>
-          <p style="font-weight: bolder;">{{potfolioDetails1[i][8]?.split(',')[2]}} , {{potfolioDetails1[i][8]?.split(',')[3]}} {{potfolioDetails1[i][10]}}</p> 
-         
-          <p *ngIf="open(data.status)" class="status1">Open</p>
-          <p *ngIf="accepted(data.status)" class="status2">Accepeted</p>
-          <p *ngIf="completed(data.status)" class="status3">Completed</p>
-          <p *ngIf="visited(data.status)" class="status4">Visited</p>
-        </div>
-      </div>
-    </div>
-   
-  </div>
-  <hr style="border-bottom: 2px solid blue !important;">
-</div> -->
-
-
 
 <div class="container d-sm-flex justify-content-between">
   <div class="row">
     <div class="col-md-4" *ngFor="let data of portfolioData;index as i">
-  <div class="card px-2 mt-3">
+  <div class="card px-2 mt-3" style="height: 100%;">
       <div class="card-header bg-white">
           <div class="row justify-content-between">
               <div class="col">
@@ -627,7 +594,7 @@
       
       <div class="row px-3">
           <div class="col">
-              <ul id="progressbar">
+              <ul id="progressbar1">
                   <li *ngIf="accepted(data.status) || visited(data.status) || completed(data.status)" class="step0 active " id="step1">Process</li>
                   <li *ngIf="!(accepted(data.status) || visited(data.status) || completed(data.status))" class="step0" id="step1">Process</li>
                   <li *ngIf="visited(data.status) || completed(data.status)" class="step0 active text-center" id="step2">Visited</li>
@@ -664,23 +631,7 @@
 
 
     <div class="modal-content">
-      <!-- <div class="modal-header"> -->
-        <!-- <div class="row justify-content-between">
-          <div class="col-sm-6">
-              <p class="text-muted"> Order ID <span class="font-weight-bold text-dark">{{request.serviceRequestId}}</span></p>
-              <p class="text-muted"> Placed On <span class="font-weight-bold text-dark">{{request.localDate}}</span> </p>
-          </div>
-          <div class="col-sm-6">
-            <div  *ngIf="request.status=='COMPLETED' && request.payment.paymentStatus=='COMPLETED'" class="col-md-4">
-              <button style="float: right;" type="button" class="btn btn-outline-success" (click)="getInvoice(request.serviceRequestId)">Get Invoice Details</button>
-            </div>
-            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button> -->
-          <!-- </div>
-         
-          
-       </div> --> 
+    
        <div class="row card-header addressType">
         <div class="col-md-4">
           <p class="text-muted"> Order ID <span class="font-weight-bold text-dark">{{request.serviceRequestId}}</span></p>
@@ -734,6 +685,41 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="row" *ngIf="techData!=null">
+              <div class="col-sm">
+                <div class="card" style="border: white;">
+                  <div class="card-header addressType">
+                    Technician Details
+                   </div>
+                  <div class="card-body">
+                    <!-- <p class="card-text">{{techData.firstName}} {{techData.email}}  {{techData.phone_Number}}</p>
+                     -->
+                     <div class="table-responsive">
+                     <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Email Id</th>
+                          <th scope="col">Contact Number</th>
+                          <th scope="col">Qualification</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="bg-success">
+                          <td>{{techData.firstName}} {{techData.lastName}}</td>
+                          <td>{{techData.email}}</td>
+                          <td>{{techData.phone_Number}}</td>
+                          <td>{{techData.qualification}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
             </div>
           <div class="row d-flex justify-content-center">
           <div class="col-12">

@@ -205,7 +205,7 @@ nav{
   border-color: #42A5F5 !important
   }
   
-  .d-sm-flex #progressbar {
+   #progressbar1 {
   margin-bottom: 30px;
   overflow: hidden;
   color: #455A64;
@@ -213,7 +213,7 @@ nav{
   margin-top: 30px
   }
   
-  .d-sm-flex #progressbar li {
+   #progressbar1 li {
   list-style-type: none;
   font-size: 13px;
   width: 33.33%;
@@ -223,7 +223,7 @@ nav{
   color: #455A64 !important
   }
   
-  .d-sm-flex #progressbar #step1:before {
+   #progressbar1 #step1:before {
   content: "1";
   color: #fff;
   width: 29px;
@@ -231,13 +231,13 @@ nav{
   padding-left: 11px !important
   }
   
-  .d-sm-flex #progressbar #step2:before {
+   #progressbar1 #step2:before {
   content: "2";
   color: #fff;
   width: 29px
   }
   
-  .d-sm-flex #progressbar #step3:before {
+   #progressbar1 #step3:before {
   content: "3";
   color: #fff;
   width: 29px;
@@ -245,7 +245,7 @@ nav{
   padding-right: 11px !important
   }
   
-  .d-sm-flex #progressbar li:before {
+   #progressbar1 li:before {
   line-height: 29px;
   display: block;
   font-size: 12px;
@@ -254,7 +254,7 @@ nav{
   margin: auto
   }
   
-  .d-sm-flex #progressbar li:after {
+   #progressbar1 li:after {
   content: '';
   width: 121%;
   height: 2px;
@@ -266,22 +266,22 @@ nav{
   z-index: -1
   }
   
-  .d-sm-flex #progressbar li:nth-child(2):after {
+   #progressbar1 li:nth-child(2):after {
   left: 50%
   }
   
-  .d-sm-flex #progressbar li:nth-child(1):after {
+   #progressbar1 li:nth-child(1):after {
   left: 25%;
   width: 121%
   }
   
-  .d-sm-flex #progressbar li:nth-child(3):after {
+   #progressbar1 li:nth-child(3):after {
   left: 25% !important;
   width: 50% !important
   }
   
-  .d-sm-flex #progressbar li.active:before,
-  #progressbar li.active:after {
+   #progressbar1 li.active:before,
+  #progressbar1 li.active:after {
   background:#007bff
   }
   
@@ -341,7 +341,8 @@ nav{
   padding-right: 13% !important
   }
   
-  .tracking #progressbar {
+  
+#progressbar {
   margin-bottom: 30px;
   overflow: hidden;
   color: #455A64;
@@ -349,7 +350,7 @@ nav{
   margin-top: 30px
   }
   
-  .tracking #progressbar li {
+  #progressbar li {
   list-style-type: none;
   font-size: 13px;
   width: 33%;
@@ -358,13 +359,13 @@ nav{
   font-weight: 400;
   }
   
-  .tracking #progressbar .step0:before {
+  #progressbar .step0:before {
   font-family: FontAwesome;
   content: "\f10c";
   color: #fff
   }
   
-  .tracking #progressbar li:before {
+  #progressbar li:before {
   width: 40px;
   height: 40px;
   line-height: 45px;
@@ -376,7 +377,7 @@ nav{
   padding: 0px
   }
   
-  .tracking #progressbar li:after {
+  #progressbar li:after {
   content: '';
   width: 100%;
   height: 12px;
@@ -387,41 +388,41 @@ nav{
   z-index: -1
   }
   
-  .tracking #progressbar li:last-child:after {
+  #progressbar li:last-child:after {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   position: absolute;
   left: -50%
   }
   
-  .tracking #progressbar li:nth-child(2):after,
+  #progressbar li:nth-child(2):after,
   #progressbar li:nth-child(3):after {
   left: -50%
   }
   
-  .tracking #progressbar li:first-child:after {
+  #progressbar li:first-child:after {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   position: absolute;
   left: 50%
   }
   
-  .tracking #progressbar li:last-child:after {
+  #progressbar li:last-child:after {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px
   }
   
-  .tracking #progressbar li:first-child:after {
+  #progressbar li:first-child:after {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px
   }
   
-  .tracking #progressbar li.active:before,
+  #progressbar li.active:before,
   #progressbar li.active:after {
   background: #007bff;
   }
   
-  .tracking #progressbar li.active:before {
+  #progressbar li.active:before {
   font-family: FontAwesome;
   content: "\f00c"
   }

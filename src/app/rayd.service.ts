@@ -8,6 +8,7 @@ import { AddProblem } from './add-problem';
 import { VisitingDetails } from './visiting-details';
 import { OrderDetails } from './order-details';
 import { ToastrService } from 'ngx-toastr';
+import { TechnicianDetails } from "./technician";
 
 @Injectable({
   providedIn: 'root'
@@ -37,11 +38,11 @@ export class RaydService {
     this.http.post(URL, this.signUpDetails, { responseType: 'text' as 'json' }).subscribe(
       (result) => {
         console.log(result)
-        alert("register")
+        this.toastr.success("Registered successfully",'Success')
         this.router.navigate(['customerLogin']);
       },
       err => {
-        alert("Something wrong with server please try later")
+        this.toastr.error("Something wrong, try later",'Error')
 
       }
     )
@@ -58,8 +59,9 @@ export class RaydService {
     this.http.post(URL, this.loginDetails, { headers, responseType: 'text' }).subscribe(
       (result) => {
         this.userData = JSON.parse(result); 
-        //console.log((sessionStorage.getItem("userId")).userId);
+        //
         sessionStorage.setItem("userId", this.userData.userId);
+        console.log((sessionStorage.getItem("userId")));
         this.toastr.success("Login successfully",'Success')
         this.router.navigate(['userDashboard']);
         
@@ -124,7 +126,7 @@ export class RaydService {
   /* This function get all the address of a particular user/customer */
   addressResult;
   async  getAddress(){
-    var URL = this.url+'getAddress?userId='+this.userData.userId;
+    var URL = this.url+'getAddress?userId='+(sessionStorage.getItem("userId"));
     this.addressResult=await this.http.get(URL).toPromise();
   }
 
@@ -146,7 +148,7 @@ export class RaydService {
   /* This function is to get all requested problem */
   problemRequested;
   async  getRequest(){
-    var URL = this.url+'getProblem?userId='+this.userData.userId;
+    var URL = this.url+'getProblem?userId='+(sessionStorage.getItem("userId"));
     
     this.problemRequested=await this.http.get(URL).toPromise();
     console.log(this.problemRequested)
@@ -192,7 +194,34 @@ export class RaydService {
   
         }
       )
+  }
 
+  saveRevisit(){
+    var URL = this.url+'reVisitingDetails'
+      this.http.post(URL, this.visitingDetails, { responseType: 'text' as 'json' }).subscribe(
+        (result) => {
+          console.log(result)
+          this.toastr.success("Review Added",'Success')
+        },
+        err => {
+          this.toastr.error("Something wrong",'Error')
+  
+        }
+      )
+  }
+  technician=new TechnicianDetails();
+  async saveTechnician(){
+    var URL = this.url+'assignTechnician'
+    this.http.post(URL, this.technician, { responseType: 'text' as 'json' }).subscribe(
+      (result) => {
+        console.log(result)
+        this.toastr.success("Technician Added",'Success')
+      },
+      err => {
+        this.toastr.error("Something wrong",'Error')
+
+      }
+    )
   }
   /* This function is save parts details if request is completed */
    orderDetails=[];
@@ -234,7 +263,7 @@ export class RaydService {
   /* This function get all the visiting message for a particular user */
   vistingMessage;
   async getVistingDetails(){
-    var URL = this.url+'review?userId='+this.userData.userId;
+    var URL = this.url+'review?userId='+(sessionStorage.getItem("userId"));
     this.vistingMessage=await this.http.get(URL).toPromise();
     console.log(this.vistingMessage)
   }
@@ -248,13 +277,13 @@ export class RaydService {
   /* This function get sum of all type of request for a particular user to draw chart */
   requestTypeOfAUser;
   async getrequestTypeOfUser(){
-    var URL=this.url+'countTypeOfAUser?userId='+this.userData.userId;
+    var URL=this.url+'countTypeOfAUser?userId='+(sessionStorage.getItem("userId"));
     this.requestTypeOfAUser=await this.http.get(URL).toPromise();
   }
   /* This function get the request which has completed but payment is not done */
   paymentData;
   async getNotCompletedPayment(){
-    var URL=this.url+'getPaymentStatus?userId='+this.userData.userId;
+    var URL=this.url+'getPaymentStatus?userId='+(sessionStorage.getItem("userId"));
     this.paymentData=await this.http.get(URL).toPromise();
   }
   /* This function is for change the password */
@@ -290,18 +319,37 @@ export class RaydService {
   }
   /* This function is to get invoice details for a particular request */
   invoiceDetails;
+  serviceCharge=0;
+  subTotal=0;
+  taxAmount=0;
+  totalPrice=0;
+  grandTotal : number;
   async getInvoiceDetails(){
-    var URL=this.url+'getInvoice?serviceRequestId='+this.requestId;
+    var URL=this.url+'getInvoice?serviceRequestId='+(sessionStorage.getItem("requestId"));
     this.invoiceDetails=await this.http.get(URL).toPromise();
+    for(var i in this.invoiceDetails) {
+      console.log(i)
+        this.totalPrice = +this.invoiceDetails[i][12] * +this.invoiceDetails[i][14];
+        this.serviceCharge=this.invoiceDetails[i][13];
+        this.subTotal = this.subTotal + this.totalPrice;     
+    }
+    this.taxAmount = Math.round(this.subTotal / 12);
+    this.grandTotal = this.subTotal + Math.round(this.taxAmount)+ this.serviceCharge;
+    sessionStorage.setItem("grandTotal",this.grandTotal+"");
     console.log(this.invoiceDetails);
   }
 
   portfolioDetails1;
   async getServiceRequestDetails(){
-    var URL=this.url+'getPortfolioDetails?userId='+this.userData.userId;
+    var URL=this.url+'getPortfolioDetails?userId='+(sessionStorage.getItem("userId"));
     this.portfolioDetails1=await this.http.get(URL).toPromise();
     console.log(this.portfolioDetails1);
 
+  }
+  tecnicianDetails;
+  async getTechnicianDetails(technicianId){
+    var URL=this.url+'getTechnician?technicianId='+technicianId;
+    this.tecnicianDetails=await this.http.get(URL).toPromise();
   }
 
 

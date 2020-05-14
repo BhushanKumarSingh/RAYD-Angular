@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class FeedbackComponent implements OnInit {
 
     starValue : number;
-    srId : number = this.raydService.requestId;
+    srId : number = +sessionStorage.getItem("requestId");
     message : any;
 
   constructor(private toastr: ToastrService,private raydService:RaydService,private customerService : AppService,  private router:Router) { }
@@ -39,20 +39,5 @@ export class FeedbackComponent implements OnInit {
   public clearForm() {
     this.ngOnInit();
   }
-  successmsg(){
-    this.toastr.success("Toastr Success message",'Success')
-    }
-    errorsmsg(){
-    this.toastr.error("Toastr Error Notification",'Error')
-    
-    }
-    infotoastr()
-    {
-    this.toastr.info("Important News", 'Information')
-    }
-    toastrwaring()
-    {
-    this.toastr.warning("Battery about to Die", 'Warning');
-    }
 
 }
