@@ -11,31 +11,32 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FeedbackComponent implements OnInit {
 
-    starValue : number;
-    srId : number = +sessionStorage.getItem("requestId");
-    message : any;
+  starValue: number;
+  srId: number = +sessionStorage.getItem("requestId");
+  message: any;
 
-  constructor(private toastr: ToastrService,private raydService:RaydService,private customerService : AppService,  private router:Router) { }
+  constructor(private toastr: ToastrService, private raydService: RaydService, private customerService: AppService, private router: Router) { }
 
   ngOnInit() {
-   
+
   }
 
-  public radioChangeHandler(event : any) {
+  // This function is get number with respect to corresponding star
+  public radioChangeHandler(event: any) {
     this.starValue = event.target.value;
-
   }
 
+  // This function save feedback message and star
   public sendFeedback(feedbackText) {
     let resp1 = this.customerService.sendFeedback(this.srId, this.starValue, feedbackText);
-    resp1.subscribe ((data) => {
+    resp1.subscribe((data) => {
       this.message = data;
       this.toastr.success(this.message, 'Success');
       this.router.navigate(["userDashboard"])
-      // this.router.navigateByUrl('');
     });
   }
-
+  
+  // This function is for clear all text and star
   public clearForm() {
     this.ngOnInit();
   }

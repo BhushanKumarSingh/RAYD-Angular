@@ -14,6 +14,7 @@ export class SpTechniciansComponent implements OnInit {
   constructor(private raydService:RaydService,private spService:ServiceproviderService) { }
 
   ngOnInit() {
+    // Here we are geting all the details of all technician for a particular service provider
     let response = this.spService.getTechnicianData(this.id);
       response.subscribe((data)=>{
         this.spObj = data;

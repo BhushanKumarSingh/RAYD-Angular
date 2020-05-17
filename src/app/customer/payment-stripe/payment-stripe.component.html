@@ -4,22 +4,25 @@
             <h3 class="text-center">Credit Card Payment</h3>
             <hr>
             <div class="alert alert-info p-2 pb-3">
-                <a class="close font-weight-normal initialism" data-dismiss="alert" href="#"><samp>&times;</samp></a> 
+                <a class="close font-weight-normal initialism" data-dismiss="alert" href="#"><samp>&times;</samp></a>
                 CVC code is required.
             </div>
-            <form [formGroup]="paymentForm" class="form"  >
+            <form [formGroup]="paymentForm" class="form">
                 <div class="form-group">
                     <label for="cc_name">Card Holder's Name</label>
-                    <input type="text" class="form-control" id="cc_name" [(ngModel)]="paymentObj.cardName" formControlName="cardName" name="pCardName" required="required" >
+                    <input type="text" class="form-control" id="cc_name" [(ngModel)]="paymentObj.cardName"
+                        formControlName="cardName" name="pCardName" required="required">
                 </div>
                 <div class="form-group">
                     <label>Card Number</label>
-                    <input type="number" class="form-control" autocomplete="off" [(ngModel)]="paymentObj.cardNumber" formControlName="cardNumber" name="pCardNumber" required="" >
+                    <input type="number" class="form-control" autocomplete="off" [(ngModel)]="paymentObj.cardNumber"
+                        formControlName="cardNumber" name="pCardNumber" required="">
                 </div>
                 <div class="form-group row">
                     <label class="col-md-12">Card Exp. Date</label>
                     <div class="col-md-4">
-                        <select class="form-control" [(ngModel)]="paymentObj.expMonth" formControlName="expMonth" name="pExpMonth" size="0" >
+                        <select class="form-control" [(ngModel)]="paymentObj.expMonth" formControlName="expMonth"
+                            name="pExpMonth" size="0">
                             <option value="01">01</option>
                             <option value="02">02</option>
                             <option value="03">03</option>
@@ -35,7 +38,8 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <select class="form-control" [(ngModel)]="paymentObj.expYear" formControlName="expYear" name="pExpYear" size="0" >
+                        <select class="form-control" [(ngModel)]="paymentObj.expYear" formControlName="expYear"
+                            name="pExpYear" size="0">
                             <option>2021</option>
                             <option>2022</option>
                             <option>2023</option>
@@ -45,7 +49,8 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" autocomplete="off"  [(ngModel)]="paymentObj.cvc" formControlName="cvc" name="pCvc"  placeholder="CVC" >
+                        <input type="text" class="form-control" autocomplete="off" [(ngModel)]="paymentObj.cvc"
+                            formControlName="cvc" name="pCvc" placeholder="CVC">
                     </div>
                 </div>
                 <div class="row">
@@ -54,7 +59,8 @@
                 <div class="form-inline">
                     <div class="input-group">
                         <div class="input-group-prepend"><span class="input-group-text">₹</span></div>
-                        <input type="text" class="form-control text-right" disabled id="exampleInputAmount" placeholder="{{grandTotal}}">
+                        <input type="text" class="form-control text-right" disabled id="exampleInputAmount"
+                            placeholder="{{grandTotal}}">
                         <div class="input-group-append"><span class="input-group-text">.00</span></div>
                     </div>
                 </div>
@@ -64,7 +70,8 @@
                         <button type="reset" class="btn btn-danger btn-lg btn-block">Cancel</button>
                     </div>
                     <div class="col-md-6">
-                        <input type="button" class="btn btn-success btn-lg btn-block" value="submit"  (click)="chargeCreditCard()">
+                        <input type="button" class="btn btn-success btn-lg btn-block" value="submit"
+                            (click)="chargeCreditCard()">
                     </div>
                 </div>
             </form>
@@ -73,6 +80,6 @@
 
 </div>
 
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
-    <p style="color: white">Please Wait. </p>  
-</ngx-spinner> 
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Please Wait. </p>
+</ngx-spinner>

@@ -9,12 +9,14 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class AllQueriesComponent implements OnInit {
 
-  queryObj : any;
-  mailMsg : any;
-  constructor(private adminService : AppService, private spinnerService: NgxSpinnerService) { }
+  queryObj: any;
+  mailMsg: any;
+  constructor(private adminService: AppService, private spinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
     this.spinnerService.show();
+
+    // Here we are subscribe getAllQuery functin to get all query
     let resp1 = this.adminService.getAllQuery();
     resp1.subscribe((data) => {
       this.queryObj = data;
@@ -24,9 +26,9 @@ export class AllQueriesComponent implements OnInit {
 
   }
 
+  // Send response message on respective emailId
   public sendMail(queryId, adminMailText) {
     this.spinnerService.show();
-    console.log(queryId + "-------" + adminMailText);
     let resp2 = this.adminService.sendMail(queryId, adminMailText);
     resp2.subscribe((data1) => {
       this.mailMsg = data1;

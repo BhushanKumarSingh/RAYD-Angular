@@ -16,13 +16,15 @@ export class IncomingRequestComponent implements OnInit {
      this.openRequest=this.raydService.openRequest;
   }
   openRequest;
+  // This function is for get all the open request, those request which is not accepted
   async getOpenRequestData(){
     await this.raydService.getOpenRequest();
     this.openRequest=this.raydService.openRequest;
-    console.log(this.openRequest);
-    
   }
+  // This is the object of AddProblem class
   requestData=new AddProblem();
+
+  // This function set all the details of a particular request
   async accept(event){
     this.requestData.setServiceRequestId=event[0];
     this.requestData.setCompanyName=event[1];
@@ -36,16 +38,13 @@ export class IncomingRequestComponent implements OnInit {
     this.requestData.setPinCode=event[10];
     this.requestData.setUserId=event[11];
     this.requestData.setDate=event[12];
-    console.log(event[12]);
     this.requestData.setServiceProviderId=this.raydService.serviceData.serviceProviderId;
 
-
+    // This function is calling to accept this request
      await this.raydService.acceptRequest(this.requestData);
      await this.raydService.getOpenRequest();
      this.openRequest=this.raydService.openRequest;
      this.getOpenRequestData();
-     
-     console.log(this.openRequest);
     
   }
 

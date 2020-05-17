@@ -9,22 +9,26 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class HomepageComponent implements OnInit {
 
-  constructor(private SpinnerService: NgxSpinnerService,private raydService:RaydService) { }
-  PieChart=[];
-  BarChart=[];
+  constructor(private SpinnerService: NgxSpinnerService, private raydService: RaydService) { }
+  PieChart = [];
+  BarChart = [];
 
   async ngOnInit() {
     this.SpinnerService.show();
+
+    // This function geting all request type
     await this.raydService.getrequestType();
     this.SpinnerService.hide();
-    this.PieChart=new Chart("pieChart",{
-      type:'pie',
-      data:{
-        labels:["Electronics","Furniture","Plumber","Mechanic"],
-        datasets:[{
-          label:'Pie Chart',
-          data:this.raydService.requestType[0],
-          backgroundColor:[
+
+    // This function for draw pie chart and bar chart using chart.js of all request  
+    this.PieChart = new Chart("pieChart", {
+      type: 'pie',
+      data: {
+        labels: ["Electronics", "Furniture", "Plumber", "Mechanic"],
+        datasets: [{
+          label: 'Pie Chart',
+          data: this.raydService.requestType[0],
+          backgroundColor: [
             'YELLOW',
             'BLUE',
             'GREEN',
@@ -32,15 +36,15 @@ export class HomepageComponent implements OnInit {
           ],
         }]
       },
-      options:{
-        title:{
-          text:"Pie Chart",
-          display:true
+      options: {
+        title: {
+          text: "Pie Chart",
+          display: true
         },
-        scales:{
-          yAxes:[{
-            ticks:{
-             beginAtZero:true
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
             }
           }]
         }
@@ -48,14 +52,14 @@ export class HomepageComponent implements OnInit {
 
     })
 
-    this.BarChart=new Chart("barChart",{
-      type:'bar',
-      data:{
-        labels:["Electronics","Furniture","Plumber","Mechanic"],
-        datasets:[{
-          label:'Bar Chart',
-          data:this.raydService.requestType[0],
-          backgroundColor:[
+    this.BarChart = new Chart("barChart", {
+      type: 'bar',
+      data: {
+        labels: ["Electronics", "Furniture", "Plumber", "Mechanic"],
+        datasets: [{
+          label: 'Bar Chart',
+          data: this.raydService.requestType[0],
+          backgroundColor: [
             'YELLOW',
             'BLUE',
             'GREEN',
@@ -63,22 +67,22 @@ export class HomepageComponent implements OnInit {
           ],
         }]
       },
-      options:{
-        title:{
-          text:"Bar Chart",
-          display:true
+      options: {
+        title: {
+          text: "Bar Chart",
+          display: true
         },
-        scales:{
-          yAxes:[{
-            ticks:{
-             beginAtZero:true
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
             }
           }]
         }
       }
 
     })
-   
+
   }
 
 }

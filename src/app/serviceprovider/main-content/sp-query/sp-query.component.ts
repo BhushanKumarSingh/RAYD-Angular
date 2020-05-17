@@ -11,14 +11,15 @@ import { RaydService } from 'src/app/rayd.service';
 })
 export class SpQueryComponent implements OnInit {
 
-  spId : number =this.raydService.serviceData.serviceProviderId;
-  spObj : any;
-  spObjArr : any = [];
-  constructor(private raydService:RaydService,private spService:ServiceproviderService, private SpinnerService: NgxSpinnerService) { }
+  spId: number = this.raydService.serviceData.serviceProviderId;
+  spObj: any;
+  spObjArr: any = [];
+  constructor(private raydService: RaydService, private spService: ServiceproviderService, private SpinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
   }
 
+  // This function is for send query to admin
   public saveQuery(queryTitle, query) {
     this.SpinnerService.show();
     let date: Date = new Date();
@@ -27,8 +28,8 @@ export class SpQueryComponent implements OnInit {
       this.spObj = data;
       var str = this.spObj + '';
       this.spObjArr = str.split(",");
-      let isSolved : boolean = false;
-      let spQueryObj : SpQuery = new SpQuery(this.spId, this.spObjArr[0], this.spObjArr[1], queryTitle, query, date, isSolved);
+      let isSolved: boolean = false;
+      let spQueryObj: SpQuery = new SpQuery(this.spId, this.spObjArr[0], this.spObjArr[1], queryTitle, query, date, isSolved);
       this.SpinnerService.hide();
       this.spService.saveQuery(spQueryObj);
 

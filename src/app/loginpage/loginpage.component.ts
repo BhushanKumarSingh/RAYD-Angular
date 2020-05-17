@@ -17,30 +17,29 @@ export class LoginpageComponent implements OnInit {
     password: new FormControl('')
   })
 
-  constructor(private SpinnerService: NgxSpinnerService,private raysService: RaydService, private appComponenet: AppComponent,private router:Router) {
-    console.log(router.url)
-   }
-   
- async  login() {
+  constructor(private SpinnerService: NgxSpinnerService, private raysService: RaydService, private appComponenet: AppComponent, private router: Router) {
+  }
+// This function used for send all the details for login and get response
+  async  login() {
     this.SpinnerService.show();
     this.raysService.loginDetails.setEmailId = this.loginForm.get('emailId').value;
     this.raysService.loginDetails.setPassword = this.loginForm.get('password').value;
-    console.log("login")
 
-    if(this.router.url=="/customerLogin")
-    await this.raysService.customerLogin();
-    if(this.router.url=="/adminLogin")
-    this.raysService.adminLogin();
-    if(this.router.url=="/ServiceProviderLogin")
-    this.raysService.serviceProviderLogin();
-    // this.appComponenet.change();
+
+    if (this.router.url == "/customerLogin")
+      await this.raysService.customerLogin();
+    if (this.router.url == "/adminLogin")
+      this.raysService.adminLogin();
+    if (this.router.url == "/ServiceProviderLogin")
+      this.raysService.serviceProviderLogin();
+
     this.SpinnerService.hide();
-    
-    
+
+
   }
 
   ngOnInit() {
-    
+
   }
 
 }

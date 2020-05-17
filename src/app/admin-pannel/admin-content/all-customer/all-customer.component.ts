@@ -8,20 +8,22 @@ import { RaydService } from 'src/app/rayd.service';
 })
 export class AllCustomerComponent implements OnInit {
 
-  constructor(private raydService:RaydService) {
-    
-  }
-  customer;
-  async ngOnInit() {
-   await this.raydService.getAllCustomer();
-    this.customer=this.raydService.allCustomer;
-    console.log(this.customer)
-    
+  constructor(private raydService: RaydService) {
+
   }
   address;
-  view=false;
-  details(event){
-    this.address=event;
-    this.view=true;
+  view = false;
+  customer;
+
+  async ngOnInit() {
+    // Fetch details of all user
+    await this.raydService.getAllCustomer();
+    this.customer = this.raydService.allCustomer;
+  }
+
+  // This function is for show the address of a particular user
+  details(event) {
+    this.address = event;
+    this.view = true;
   }
 }

@@ -21,8 +21,8 @@ export class AllServiceRequestComponent implements OnInit {
       productType: [null],
       products: this.fb.array([this.createProduct()]),
     });
-  
-  // set contactlist to the form control containing contacts
+
+    // set contactlist to the form control containing contacts
     this.productList = this.form.get('products') as FormArray;
   }
 
@@ -57,10 +57,10 @@ export class AllServiceRequestComponent implements OnInit {
   // method triggered when form is submitted
   submit() {
     console.log(this.form.value);
-    for(var i = 0; i < this.productList.value.length; i++) {
+    for (var i = 0; i < this.productList.value.length; i++) {
       console.log(this.productList.value[i].productName);
     }
-    
+
   }
 
 }

@@ -8,18 +8,21 @@ import { RaydService } from 'src/app/rayd.service';
 })
 export class AllServiceProviderComponent implements OnInit {
 
-  constructor(private raydService:RaydService) { }
+  constructor(private raydService: RaydService) { }
   allServiceProvider;
-  view=false;
+  view = false;
+
   async ngOnInit() {
+    // This function is calling for get all service provider which is register and verfy
     await this.raydService.getAllServiceProvider();
-    this.allServiceProvider=this.raydService.allServiceProvider;
-   
+    this.allServiceProvider = this.raydService.allServiceProvider;
+
   }
   all;
-  details(event){
-    this.all=event;
-    this.view=true;
+  // This function is for veiw details for a particular service provider
+  details(event) {
+    this.all = event;
+    this.view = true;
   }
 
 }

@@ -10,7 +10,7 @@
   <div class="row">
     <div class="col-md-3">
       <div class="contact-info text-center">
-        <img src="../../../../assets/img/contact-image.png" alt="image"/>
+        <img src="../../../../assets/img/contact-image.png" alt="image" />
         <h2>Contact Us</h2>
         <h4>We would love to hear from you !</h4>
       </div>
@@ -19,19 +19,21 @@
       <div class="contact-form">
         <div class="form-group">
           <label class="control-label " for="lname">Query Title:</label>
-          <div class="col-sm-12">          
-          <input #queryTitle type="text" class="form-control" id="lname" placeholder="Enter Query Title" name="lname" required="">
+          <div class="col-sm-12">
+            <input #queryTitle type="text" class="form-control" id="lname" placeholder="Enter Query Title" name="lname"
+              required="">
           </div>
         </div>
         <div class="form-group">
-          <label  class="control-label" for="comment">Ask Your Query:</label>
+          <label class="control-label" for="comment">Ask Your Query:</label>
           <div class="col-sm-12">
-          <textarea #query class="form-control" rows="5" id="comment" required=""></textarea>
+            <textarea #query class="form-control" rows="5" id="comment" required=""></textarea>
           </div>
         </div>
-        <div class="form-group">        
+        <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-primary" (click)="saveQuery(queryTitle.value, query.value)">Submit</button>
+            <button type="submit" class="btn btn-primary"
+              (click)="saveQuery(queryTitle.value, query.value)">Submit</button>
           </div>
         </div>
       </div>
@@ -39,4 +41,4 @@
   </div>
 </div>
 
-<ngx-spinner  size = "medium" color = "#fff" type = "line-scale" [fullScreen] = "true"></ngx-spinner>
+<ngx-spinner size="medium" color="#fff" type="line-scale" [fullScreen]="true"></ngx-spinner>

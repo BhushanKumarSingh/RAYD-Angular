@@ -9,28 +9,33 @@ import { ServiceProvider } from 'src/app/service-provider';
 })
 export class ServiceProviderRequestComponent implements OnInit {
 
-  constructor(private raydService:RaydService) {
-    
+  constructor(private raydService: RaydService) {
+
   }
   serviceRequest;
   async ngOnInit() {
-   await this.raydService.verifyServiceRequest();
-    this.serviceRequest=this.raydService.verifyServiceRequestDetails;
-    console.log(this.serviceRequest)
-    
+    // This function calling those service provider which is register but not verify
+    await this.raydService.verifyServiceRequest();
+    this.serviceRequest = this.raydService.verifyServiceRequestDetails;
   }
-i;
-view=false;
-  getDetails(event){
-    console.log(event);
-    this.i=event;
-    this.view=true
+  i;
 
+  // This variable for show and hide model
+  view = false;
+
+  // This function is for geting details for a particular service provider
+  getDetails(event) {
+    this.i = event;
+    this.view = true
   }
-  serviceProvider=new ServiceProvider();
-  async sendPassword(event){
-    this.serviceProvider.setServiceProviderId=event.serviceProviderId;
-    this.serviceProvider.setEmailId=event.emailId;
+
+  // This is the object of ServiceProvider class
+  serviceProvider = new ServiceProvider();
+
+  // This function is for send password to the service provider which is register there request
+  async sendPassword(event) {
+    this.serviceProvider.setServiceProviderId = event.serviceProviderId;
+    this.serviceProvider.setEmailId = event.emailId;
     await this.raydService.sendLoginPassword(this.serviceProvider);
   }
 }

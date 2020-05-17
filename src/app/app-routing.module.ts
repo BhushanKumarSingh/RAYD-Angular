@@ -20,7 +20,6 @@ import { ServiceProviderRequestComponent } from './admin-pannel/admin-content/se
 import { ServiceProviderServiceComponent } from './serviceprovider/main-content/service-provider-service/service-provider-service.component';
 import { ServiceProvideSignupComponent } from './service-provide-signup/service-provide-signup.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
-import { AddProblemComponent } from './add-problem/add-problem.component';
 import { AllServiceProviderComponent } from './admin-pannel/admin-content/all-service-provider/all-service-provider.component';
 import { AllCustomerComponent } from './admin-pannel/admin-content/all-customer/all-customer.component';
 import { AllServiceRequestComponent } from './admin-pannel/admin-content/all-service-request/all-service-request.component';
@@ -35,7 +34,6 @@ const routes: Routes = [
   {path: "addresspage", component: AddressComponent},
   {path: "serviceProviderSignUp",component:ServiceProvideSignupComponent},
   {path:"userDashboard",component:UserDashboardComponent},
-  {path:"addProblem",component:AddProblemComponent},
   {path:"adminLogin",component:LoginpageComponent},
   {path:"ServiceProviderLogin",component:LoginpageComponent},
   {path:"home",component:HomepageComponent},

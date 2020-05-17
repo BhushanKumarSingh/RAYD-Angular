@@ -28,28 +28,27 @@ export class CustomerInvoiceComponent implements OnInit {
 
 myDate = new Date();
 date;
-  constructor(private toastr:ToastrService,private spinerService:NgxSpinnerService,private raydService : RaydService,private datePipe: DatePipe,private router:Router) { 
+  constructor(private toastr:ToastrService,private spinerService:NgxSpinnerService,private raydService : RaydService,private datePipe: DatePipe,private router:Router) {
+    // It is used to get current date
     this.date = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
   invoiceDetails=[]
+
   async ngOnInit() {
+    // It is calling to get all the details of invoice for paticular service request
     await this.raydService.getInvoiceDetails();
     this.invoiceDetails=this.raydService.invoiceDetails;
       for(var i in this.invoiceDetails) {
-        console.log(i)
           this.totalPrice = +this.invoiceDetails[i][12] * +this.invoiceDetails[i][14];
           this.serviceCharge=this.invoiceDetails[i][13];
           this.subTotal = this.subTotal + this.totalPrice;     
       }
       this.taxAmount = Math.round(this.subTotal / 12);
       this.grandTotal = this.subTotal + Math.round(this.taxAmount)+ this.serviceCharge;
-      console.log(this.grandTotal);
-    
-    console.log(this.invoiceDetails)
   }
 
+  // This function is for genrate PDF
   public generatePdf() {
-    // this.spinerService.show();
     var data = document.getElementById('invoiceForm');
     html2canvas(data).then((canvas) =>{
       var imgWidth = 208;
@@ -62,9 +61,7 @@ date;
       var position = 0;
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
       pdf.save('File.pdf');
-      alert("")
       this.toastr.success("Downloaded.",'Success')
-      // this.spinerService.hide();
       this.router.navigate(["feedback"]);
       
     });
