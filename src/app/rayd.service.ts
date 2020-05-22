@@ -41,11 +41,14 @@ export class RaydService {
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.signUpDetails.getEmailId + ':' + this.signUpDetails.getPassword) });
     this.http.post(URL, this.signUpDetails, { responseType: 'text' as 'json' }).subscribe(
       (result) => {
+        console.log(result)
         this.toastr.success("Registered successfully",'Success')
         this.router.navigate(['customerLogin']);
       },
       err => {
-        this.toastr.error("Something wrong, try later",'Error')
+        var data=JSON.parse(err.error);
+        this.toastr.error(data.Message,'Error')
+        this.router.navigate(['customerLogin']);
 
       }
     )

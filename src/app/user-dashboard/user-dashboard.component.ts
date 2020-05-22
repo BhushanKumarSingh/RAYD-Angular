@@ -263,7 +263,8 @@ export class UserDashboardComponent implements OnInit {
 
   // This function is for get invoice details 
   getInvoice(requestId) {
-    this.raydService.requestId = (sessionStorage.getItem("requestId"));
+    sessionStorage.setItem("requestId", requestId);
+    this.raydService.requestId = requestId;
     this.router.navigate(["repairinvoice"]);
   }
 

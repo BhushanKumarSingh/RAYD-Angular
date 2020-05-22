@@ -22,7 +22,6 @@ export class AddressComponent implements OnInit {
             pinCode: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{6}$")]],
             addressType: ['', Validators.required]
         });
-
     }
 
     // This function is for return address form controls
